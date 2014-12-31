@@ -1,0 +1,353 @@
+;; Detect online status
+(require 'cl)
+(defun esk-online-p ()
+  (interactive)
+  (if (and (functionp 'network-interface-list)
+           (network-interface-list))
+      (some (lambda (iface) (unless (equal "lo" (car iface))
+                              (member 'up (first (last (network-interface-info
+                                                        (car iface)))))))
+            (network-interface-list))
+    t))
+
+;; =================================================================================================
+;; scroll one line up/down
+;; =================================================================================================
+(defun scroll-n-lines-ahead (n)
+  "Scroll ahead N lines (1 by default)"
+  (interactive "P")
+  (scroll-up (prefix-numeric-value n)))
+
+(defun scroll-n-lines-behind (n)
+  "Scroll ahead N lines (1 by default)"
+  (interactive "P")
+  (scroll-down (prefix-numeric-value n)))
+
+;; =================================================================================================
+;; Open file in vertical split
+;; =================================================================================================
+(defun vsp( ) (interactive) 
+  (split-window-vertically)
+  (other-window 1)
+  (switch-to-buffer (call-interactively 'find-file))
+  )
+
+;; =========================================================================================================
+;; Easier line/word deletion
+;; =========================================================================================================
+
+;; ----------------------------------------------------------------------------------------------------------
+;; delete whole line
+;; Usage : C-k         : kill-line
+;;         C-u C-k     : delete the line from the beginning
+;;         C-u arg C-k : kill-line arg
+;; ----------------------------------------------------------------------------------------------------------
+(defun delete-line (arg)
+  (interactive "P")
+  (if (consp arg)
+      (progn
+        (beginning-of-line)
+        (kill-line)
+        (kill-line))
+    (kill-line arg)))
+
+;; ----------------------------------------------------------------------------------------------------------
+;; My version for deleting a word forward and the complete word.
+;; Usage: M-d       : kill-word
+;;        C-u M-d   : kill the whole word from beginning
+;;        C-u arg M-d : kill-word arg
+;; Hint:
+;; with the "P" option to interactive, if no prefix integer value is given,
+;; the raw value of the arg when typing C-u M-x ... is a list.
+;; If a prefix argument is given e.g. C-u 4 M-x ... then the argument has a
+;; value. If the value is 0, we kill the word, otherwise we call kill-word
+;; with this parameter.
+;; ATTENTION: M-d does not work here asasfas-def-ghi starting from the 'a' letter.
+;; ----------------------------------------------------------------------------------------------------------
+(defun delete-word (arg)
+  (interactive "P")
+  (cond ((consp arg) ;; e.g C-u
+         (kill-word 1))
+        (arg ;; e.g. C-u 3
+         (kill-word arg))
+        ( ;; no prefix key
+         (let ((start (point)))
+           (forward-word)
+           (backward-word)
+           (if (< start (point))
+               (goto-char start))
+           (kill-word 1)))))
+
+;; ===============================================================================================
+;; Faster copying
+;; ===============================================================================================
+;; -----------------------------------------------------------------------------------------------
+;; Base functions
+;; -----------------------------------------------------------------------------------------------
+(defun get-point (symbol &optional arg)
+  "get the point"
+  (funcall symbol arg)
+  (point)
+  )
+
+(defun copy-thing (begin-of-thing end-of-thing &optional arg)
+  "copy thing between beg & end into kill ring"
+  (save-excursion
+    (let ((beg (get-point begin-of-thing 1))
+          (end (get-point end-of-thing arg)))
+      (copy-region-as-kill beg end)))
+  )
+
+;; I do not use paste-to-mark as one needs to specify where to paste before copying text
+(defun paste-to-mark(&optional arg)
+  "Paste things to mark, or to the prompt in shell-mode"
+  (let ((pasteMe 
+         (lambda()
+           (if (string= "shell-mode" major-mode)
+               (progn (comint-next-prompt 25535) (yank))
+             (progn (goto-char (mark)) (yank) )))))
+    (if arg
+        (if (= arg 1)
+            nil
+          (funcall pasteMe))
+      (funcall pasteMe))
+    ))
+;; -----------------------------------------------------------------------------------------------
+;; Copy Word
+;; -----------------------------------------------------------------------------------------------
+(defun copy-word (&optional arg)
+  "Copy words at point into kill-ring"
+  (interactive "p")
+  (copy-thing 'backward-word 'forward-word arg)
+  (message "%d word%s copied" arg (if (= 1 arg) "" "s"))
+  ;; (paste-to-mark arg)
+  )
+;; -----------------------------------------------------------------------------------------------
+;; Copy Line
+;; Hint:
+;; beginning-of-line       : moves to the beginning of the current or +arg line
+;; end-of-line             : moves to the end of the curreutn or +arg line
+;; line-beginning-position : return the POSITION of the beginning of the current or +arg line
+;; -----------------------------------------------------------------------------------------------
+(defun copy-line (&optional arg)
+  "Save current line into Kill-Ring without mark the line "
+  (interactive "p")
+  (copy-thing 'beginning-of-line 'beginning-of-line (+ 1 arg))
+  (message "%d line%s copied" arg (if (= 1 arg) "" "s"))
+  ;; (paste-to-mark arg)
+  )
+
+
+(defun revert-all-buffers ()
+  "Refreshes all open buffers from their respective files"
+  (interactive)
+  (let* ((list (buffer-list))
+         (buffer (car list)))
+    (while buffer
+      (when (and (buffer-file-name buffer) 
+                 (not (buffer-modified-p buffer)))
+        (set-buffer buffer)
+        (revert-buffer t t t)
+        (message "Refreshing : %s" buffer))
+      (setq list (cdr list))
+      (setq buffer (car list))))
+  (message "Refreshed open files"))
+
+(defun revert-buffer-func ()
+  "Refreshes all open buffers or the current buffer"
+  (interactive)
+  (if (y-or-n-p (format "Refresh all buffers?"))
+      (revert-all-buffers)
+    (progn
+      (revert-buffer t t t)
+      (message "Refreshed current buffer"))))
+
+;; =======================================================================================================
+;; Fast alignment of equal signs
+;; Hint on align-regexp:
+;; - regexp: match the place you are interested in aligning; to do it, one of its parenthesis groups
+;; will be extended with spaces, or shortened by deleting characters
+;; - parenthesis group: choose which one
+;; - spacing: if the group is shorter than this, spaces will be added to it; if it's longer,
+;; characters will be deleted from it, starting at the end (unless it's longer for the purposes of
+;; alignment, of course)
+;; - repeat: well, this is obvious, I think
+;; =======================================================================================================
+(defun align-equal-sign (BEG END)
+  (interactive "r")
+  (align-regexp BEG END "\\(\\s-*\\) =" 1 0 1))
+(add-hook 'prog-mode-hook (lambda() (local-set-key (kbd "C-c =") 'align-equal-sign)))
+
+;; load .emacs file
+(global-set-key (kbd "C-c i")
+                (lambda ()
+                  (interactive)
+                  (load-file "~/.emacs.d/init.el")))
+
+;; =================================================================================================
+;; Undoing unvolanteering scrolls
+;; =================================================================================================
+(put 'scroll-up-command    'unscrollable t)
+(put 'scroll-down-command  'unscrollable t)
+(put 'scroll-left          'unscrollable t)
+(put 'scroll-right         'unscrollable t)
+
+(defvar unscroll-point (make-marker)
+  "Cursor position for next call to 'undo-scrolling'.")
+
+(defvar unscroll-window-start (make-marker)
+  "Window start for next call to 'undo-scrolling'.")
+
+(defvar unscroll-hscroll nil
+  "Hscroll for next call to 'unscroll'.")
+
+(defun unscroll-remember-maybe ()
+  (if  (not (get last-command 'unscrollable))
+      (progn
+        (set-marker unscroll-point (point))
+        (set-marker unscroll-window-start (window-start))
+        (setq unscroll-hscroll (window-hscroll)))))
+
+(defun undo-scrolling ()
+  "Revert to 'unscroll-point' and 'unscroll-window-start'."
+  (interactive)
+  (goto-char unscroll-point)
+  (set-window-start nil unscroll-window-start)
+  (set-window-hscroll nil unscroll-hscroll))
+
+(defadvice scroll-up-command (before remember-for-scroll
+                              activate compile)
+  (unscroll-remember-maybe))
+
+(defadvice scroll-down-command (before remember-for-scroll
+                              activate compile)
+  (unscroll-remember-maybe))
+
+(defadvice scrolll-left (before remember-for-scroll
+                              activate compile)
+  (unscroll-remember-maybe))
+
+(defadvice scroll-right (before remember-for-scroll
+                              activate compile)
+  (unscroll-remember-maybe))
+
+;; =================================================================================================
+;; ;; Move selected region using keyboard keys
+;; =================================================================================================
+(defun move-region (arg)
+  "Move region down (arg=2) or up (arg=0). Attention: You have to select from top left to bottom right."
+  (setq distance (- (region-end) (region-beginning)))
+
+  (setf beg-region (make-marker))
+  (set-marker beg-region (region-beginning))
+  (setq end-region (region-end))
+
+  (goto-char (if (eq arg 2) (region-end) (region-beginning)))
+  (setq beg-next-line (line-beginning-position arg)
+        end-next-line (line-end-position arg))
+
+  (transpose-regions beg-region end-region beg-next-line end-next-line)
+
+  ;; re-select the region if command is repeated
+  (goto-char beg-region)
+  (set-mark-command nil)
+  (goto-char (+ beg-region distance))
+  (setq deactivate-mark nil))
+
+(defun move-region-or-next-line ()
+  "Move selected region."
+  (interactive)
+  (cond ((not (use-region-p)) (next-line))
+        (t (move-region 2))))
+
+(defun move-region-or-previous-line ()
+  "Move selected region."
+  (interactive)
+  (cond ((not (use-region-p)) (previous-line))
+        (t (move-region 0))))
+
+;; ===============================================================================================
+;; more efficient commenting: comment region or current line if no region specified
+;; ===============================================================================================
+(defun comment-or-uncomment-region-or-line ()
+  "Comments or uncomments the region or the current line if there's no active region."
+  (interactive)
+  (let (beg end)
+    (if (use-region-p)
+        (setq beg (region-beginning) end (region-end))
+      (setq beg (line-beginning-position) end (line-end-position)))
+    (comment-or-uncomment-region beg end)))
+
+(defun ask-before-closing ()
+  "Ask whether or not to close, and then close if y was pressed"
+  (interactive)
+  (if (y-or-n-p (format "Are you sure you want to exit Emacs? "))
+      (if (< emacs-major-version 22)
+          (save-buffers-kill-terminal)
+        (save-buffers-kill-emacs))
+    (message "Canceled exit")))
+
+(defun kill-other-buffers ()
+  "Kill all other buffers."
+  (interactive)
+  (mapc 'kill-buffer 
+        (delq (current-buffer) 
+              (remove-if-not 'buffer-file-name (buffer-list)))))
+
+(defun toggle-window-split ()
+  (interactive)
+  (if (= (count-windows) 2)
+      (let* ((this-win-buffer (window-buffer))
+             (next-win-buffer (window-buffer (next-window)))
+             (this-win-edges (window-edges (selected-window)))
+             (next-win-edges (window-edges (next-window)))
+             (this-win-2nd (not (and (<= (car this-win-edges)
+                                         (car next-win-edges))
+                                     (<= (cadr this-win-edges)
+                                         (cadr next-win-edges)))))
+             (splitter
+              (if (= (car this-win-edges)
+                     (car (window-edges (next-window))))
+                  'split-window-horizontally
+                'split-window-vertically)))
+        (delete-other-windows)
+        (let ((first-win (selected-window)))
+          (funcall splitter)
+          (if this-win-2nd (other-window 1))
+          (set-window-buffer (selected-window) this-win-buffer)
+          (set-window-buffer (next-window) next-win-buffer)
+          (select-window first-win)
+          (if this-win-2nd (other-window 1))))))
+
+;; replace C-j with go to new line and indent. This allows to go to new line
+;; without going to end of line and do C-j.
+(defun control-j-newline-indent ()
+  (interactive)
+  (end-of-line)
+  (newline-and-indent))
+
+(defun create-or-kill-eshell (&optional arg)
+  "Go to eshell or kill it if in eshell mode."
+  (interactive "P")
+  (if (and  (null arg) (derived-mode-p 'eshell-mode))
+      (kill-buffer)
+    (eshell arg)))
+
+(defun erase-eshell-buffer ()
+  "Erase eshell buffer and re-create the input."
+  (interactive)
+  (erase-buffer)
+  (eshell-send-input))
+
+;; Use prefix argument to C-c r (C-u C-c r) to start iedit that means to search/replace for a
+;; pattern and change it simultaneously in all other occurances.
+(defun search-replace-simultaneously (&optional arg)
+  "Search for a string if no prefix argument is provided. If a
+  prefix argument is used, search for word at point and replace
+  it simultaneously in the whole buffer."
+  (interactive "P")
+  (if (consp arg)
+      (iedit-mode)
+    (call-interactively 'replace-string)))
+
+(provide 'odabai-defuns)
