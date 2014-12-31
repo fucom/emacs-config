@@ -32,7 +32,7 @@
         odabai-smartparens
 	odabai-auctex
 	odabai-theme
-        odabai-snippets
+        ;; odabai-snippets
         odabai-ac
         odabai-iedit))
 

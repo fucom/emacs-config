@@ -5,7 +5,7 @@
   ;;     (ensure-package-installed 'persp-mode)
 
   ;; (defun persp-cycle ()
-  ;;   "Cycle throught the available perspectives."
+  ;;   "Cycle through the available perspectives."
   ;;   (interactive)
   ;;   (let ((next-pos (1+ (persp-curr-position)))
   ;;         (list-size (length (persp-all-names))))

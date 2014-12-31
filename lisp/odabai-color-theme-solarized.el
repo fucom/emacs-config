@@ -332,6 +332,48 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
        ;; ----------------------------------------------------------------------------------------
        ;; (set-face-attribute 'linum nil :background "gray10")
        ;; (set-face-attribute 'linum nil :foreground "white")
+
+       ;; ----------------------------------------------------------------------------------------
+       ;; magit
+       ;; ----------------------------------------------------------------------------------------
+       (magit-section-title ((t (:foreground ,yellow :weight bold))))
+       (magit-branch ((t (:foreground ,orange :weight bold))))
+       (magit-item-highlight ((t (:background ,base02 :weight unspecified))))
+       (magit-log-author ((t (:foreground ,cyan))))
+       (magit-log-graph ((t (:foreground ,base01))))
+       (magit-log-head-label-bisect-bad ((t (:background ,red-hc :foreground ,red-lc :box 1))))
+       (magit-log-head-label-bisect-good ((t (:background ,green-hc :foreground ,green-lc :box 1))))
+       (magit-log-head-label-default ((t (:background ,base02 :box 1))))
+       (magit-log-head-label-local ((t (:background ,blue-lc :foreground ,blue-hc :box 1))))
+       (magit-log-head-label-patches ((t (:background ,red-lc :foreground ,red-hc :box 1))))
+       (magit-log-head-label-remote ((t (:background ,green-lc :foreground ,green-hc :box 1))))
+       (magit-log-head-label-tags ((t (:background ,yellow-lc :foreground ,yellow-hc :box 1))))
+       ;; magit hotfix
+       (magit-header ((t (:inherit default))))
+       ;; TODO
+       (magit-log-sha1 ((t (:foreground ,yellow))))
+       (magit-cherry-equivalent ((t (:foreground ,magenta))))
+       (magit-cherry-unmatched ((t (:foreground ,cyan))))
+       ;; (magit-log-head-label-bisect-skip ((t (:background "light goldenrod" :foreground "dark goldenrod" :box 1))))
+       ;; (magit-log-head-label-head ((t (:background "Grey70" :foreground "Black" :box 1))))
+       ;; (magit-log-head-label-wip ((t (:background "Grey95" :foreground "LightSkyBlue3" :box 1))))
+       ;; (magit-log-reflog-label-checkout ((t (:background "Grey85" :foreground "LightSkyBlue4" :box 1))))
+       ;; (magit-log-reflog-label-cherry-pick ((t (:background "light green" :foreground "dark olive green" :box 1))))
+       ;; (magit-log-reflog-label-commit ((t (:background "LemonChiffon1" :foreground "goldenrod4" :box 1))))
+       ;; (magit-log-reflog-label-other ((t (:background "Grey50" :box 1))))
+       ;; (magit-log-reflog-label-rebase ((t (:background "Grey85" :foreground "OliveDrab4" :box 1))))
+       ;; (magit-log-reflog-label-remote ((t (:background "Grey50" :box 1))))
+       ;; (magit-log-reflog-label-reset ((t (:background "IndianRed1" :foreground "IndianRed4" :box 1))))
+       (magit-process-ng ((t (:inherit magit-header :foreground ,red))))
+       (magit-process-ok ((t (:inherit magit-header :foreground ,green))))
+       (magit-signature-bad ((t (:foreground ,red))))
+       (magit-signature-good ((t (:foreground ,green))))
+       (magit-signature-none ((t (:inherit magit-log-message))))
+       (magit-signature-untrusted ((t (:foreground ,cyan))))
+       (magit-whitespace-warning-face ((t (:inherit trailing-whitespace))))
+
+       ;; iedit
+       (iedit-occurrence ((t (:foreground ,orange :background ,base03 :inverse-video t))))
 ))))
 
 

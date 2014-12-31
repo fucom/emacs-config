@@ -102,12 +102,18 @@ a sound to be played"
 (add-hook 'org-export-before-processing-hook #'odabai/org-include-img-from-pdf)
 
 (defun odabai/org-include-img-from-pdf (&rest ignore)
-  "Convert the pdf files to image files.
+"Convert the pdf files to image files. Only looks at #HEADER: lines that have \":convertfrompdf t\".
+This function does nothing if not in org-mode, so you can safely add it to `before-save-hook'.
 
-Only looks at #HEADER: lines that have \":convertfrompdf t\".
-This function does nothing if not in org-mode, so you can safely
-add it to `before-save-hook'."
+An example usage goes like this:
+     ...
+#+HEADER: :convertfrompdf t
+\[\[/home/odabai/Dropbox/thesis/optimization/figs/results_runtime_map/org-conv-imgs/base_voc07.png\]\]
+     ...
+The command will create the folder \"org-conv-imgs\" for you and place the image \"base_voc07.png\"
+in it."
   (interactive)
+  (defconst org-conv-img "org-conv-imgs/")
   (when (derived-mode-p 'org-mode)
     (save-excursion
       (goto-char (point-min))
@@ -116,12 +122,16 @@ add it to `before-save-hook'."
               nil 'noerror)
         ;; narrow to the current element
         (org-narrow-to-element)
-        (let* (filenoext imgext imgfile pdffile cmd)
+        (let* (filenoext imgext imgfile pdffile cmd filedir)
           ;; find a line with the specified image file `[[FILE.EXT]]'
           ;; EXT must be an image extension
           (search-forward-regexp "\\[\\[\\(.*\\)\\.\\(.*\\)\\]\\]" nil 'noerror)
           (setq filenoext (match-string-no-properties 1))
           (setq imgext    (match-string-no-properties 2))
+          (setq filedir   (file-name-directory filenoext))
+          
+          ;; stripp off org-conv-img folder name extension
+          (setq file-info (split-string filenoext org-conv-img))
 
           ;; make sure we have a valid image extension
           (unless (member imgext '("png" "jpg" "jpeg" "tiff") )
@@ -129,11 +139,15 @@ add it to `before-save-hook'."
 
           ;; find full path
           (setq imgfile (expand-file-name (concat filenoext "." imgext)))
-          (setq pdffile (expand-file-name (concat filenoext "." "pdf")))
+          (setq pdffile (expand-file-name (concat (car file-info) (cadr file-info) "." "pdf")))
 
           (setq cmd (concat "convert -density 96 -quality 85 " pdffile " " imgfile))
           ;; only update if we refreshed the pdf file or the img file does not exist
           (when (file-newer-than-file-p pdffile imgfile)
+            (unless (file-exists-p filedir)
+              (message (concat "Creating directory: " filedir))
+              (make-directory filedir t))
+            
             (message "%s" cmd)
             (shell-command cmd)))
         (widen)))))
