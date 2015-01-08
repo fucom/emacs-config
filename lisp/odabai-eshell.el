@@ -36,8 +36,13 @@
 ;; helpful command
 ;; erase-buffer or erase-eshell-buffer
 
+;; include binaries located elsewhere
+"/usr/sbin/pm-suspend"
 
+
+;; =================================================================================================
 ;; Popup menu for the various possibilities
+;; =================================================================================================
 ;; (defcustom complete-in-region-use-popup t
 ;;     "If non-NIL, complete-in-region will popup a menu with the possible completions."
 ;;     :type 'boolean

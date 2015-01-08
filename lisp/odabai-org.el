@@ -10,6 +10,8 @@
 ;; do line wrap
 (add-hook 'org-mode-hook (lambda() (set-variable 'truncate-lines nil)))
 (setq org-log-done t)
+;; do not show schedules TODOs once they are done
+(setq org-agenda-skip-scheduled-if-done t)
 
 (setq org-directory (expand-file-name "~/Dropbox/org/"))
 ;; agenda files

@@ -5,7 +5,6 @@
 (setq yas/root-directory (append yas/root-directory (concat dotfiles-dir "snippets")))
 (yas-global-mode 1)
 
-
 (require 'popup)
 ;; add some shotcuts in popup menu mode
 (define-key popup-menu-keymap (kbd "M-n") 'popup-next)

@@ -10,9 +10,9 @@
 (ensure-package-installed 'ace-jump-mode)
 ;; this list specifies what the influence of the prefix is
 (setq ace-jump-mode-submode-list
-      '(ace-jump-word-mode
+      '(ace-jump-char-mode
         ace-jump-line-mode
-        ace-jump-char-mode))
+        ace-jump-word-mode))
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
 ;; ==========================================================================================
@@ -24,7 +24,7 @@
 (global-set-key (kbd "M-<up>")    'windmove-up)
 (global-set-key (kbd "M-<down>")  'windmove-down)
 
-(add-hook 'c-mode-common-hook (lambda() (local-set-key (kbd "C-j") 'control-j-newline-indent)))
+;; (add-hook 'c-mode-common-hook (lambda() (local-set-key (kbd "C-j") 'control-j-newline-indent)))
 
 (global-set-key (kbd "C-k") 'delete-line)
 (global-set-key (kbd "M-d") 'delete-word)

@@ -1,6 +1,8 @@
 ;; let's assume cuda/opencl is cpp
 (add-to-list 'auto-mode-alist '("\\.cu$" . c++-mode))
 (add-to-list 'auto-mode-alist '("\\.cl$" . c++-mode))
+;; Just come clean and admit .h files are most often C++
+(add-to-list 'auto-mode-alist '("\\.h$" . c++-mode))
 
 (add-hook 'c-mode-common-hook (lambda() (local-set-key (kbd "C-c o") 'ff-find-other-file)))
 (setq-default c-basic-offset 4)
@@ -26,7 +28,7 @@
              ))
 
 ;; To make the _ not a word separator (i.e. make it a word constituent) for c++ mode, you would do this
-(modify-syntax-entry ?_ "w" c++-mode-syntax-table)
+;; (modify-syntax-entry ?_ "w" c++-mode-syntax-table)
 
 
 ;; =================================================================================================

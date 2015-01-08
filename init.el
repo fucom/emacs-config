@@ -1,7 +1,8 @@
 ;; todo: how home dir is shown in eshell
 ;;       eshell-pcomplete
+;;       -> redshank -> eldoc/cl-doc -> elisp/slime nav ->highlight-cl => erase backup files after 29days 
 
-;; Where I keep all my lisp and configurations for emacs
+;; )Where I keep all my lisp and configurations for emacs
 (setq dotfiles-dir (expand-file-name "/home/odabai/.emacs.d/"))
 
 ;; configuration for various modes
@@ -17,19 +18,21 @@
 	odabai-ido
 	odabai-org
 	odabai-vlf
-	odabai-persp
 	odabai-projectile
+	odabai-persp
+        ;; Right now I prefer to use perspective for sessions saving
         odabai-desktop
 	odabai-prog
 	odabai-magit
 	odabai-matlab
+        odabai-smartparens
 	odabai-keybindings
 	odabai-eshell
 	odabai-slime
-	odabai-helm
+        ;; very time consuming
+	;; odabai-helm
 	odabai-cpp
-	;; ;; odabai-autopair
-        odabai-smartparens
+	;; odabai-autopair
 	odabai-auctex
 	odabai-theme
         ;; odabai-snippets
@@ -46,6 +49,11 @@
 (put 'erase-buffer 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 
+;; =======================================================================================================
+;; Helpful stuff
+;; =======================================================================================================
+;; delete-trailing-whitespace
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -53,13 +61,14 @@
  ;; If there is more than one, they won't work right.
  '(TeX-PDF-mode t)
  '(inhibit-startup-screen t)
- '(safe-local-variable-values (quote ((reftex-default-bibliography "egbib.bib") (TeX-master . "../latex2014") (modee . latex)))))
+ '(safe-local-variable-values (quote ((eval font-lock-add-keywords nil (\` (((\, (concat "(" (regexp-opt (quote ("sp-do-move-op" "sp-do-move-cl" "sp-do-put-op" "sp-do-put-cl" "sp-do-del-op" "sp-do-del-cl")) t) "\\_>")) 1 (quote font-lock-variable-name-face))))) (reftex-default-bibliography "egbib.bib") (TeX-master . "../latex2014") (modee . latex)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
 ;; Local Variables:
 ;; mode: lisp
 ;; End:

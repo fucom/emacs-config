@@ -350,4 +350,9 @@
       (iedit-mode)
     (call-interactively 'replace-string)))
 
+;; if you need to open a root file for modification
+(defun find-alternate-file-with-sudo ()
+  (interactive)
+  (find-alternate-file (concat "/sudo::" (buffer-file-name))))
+
 (provide 'odabai-defuns)
