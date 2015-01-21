@@ -72,7 +72,7 @@
   (switch-to-buffer "*compilation*"))
 
 ;;  shortcut for compile command by first setting our compile command
-(setq compile-command "make -j12 -C /home/odabai/work/lcvi-/release/")
+(setq compile-command "make -j1 -C /home/odabai/work/programs/thesis/")
 ;; do not keep warnings
 (setq compilation-skip-threshold 2)
 (add-hook 'c-mode-common-hook (lambda() (local-set-key (kbd "C-c v") 'compile)))

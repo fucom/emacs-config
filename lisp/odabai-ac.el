@@ -35,4 +35,7 @@
 (add-hook 'c++-mode-hook 'odabai/ac-c-header-init)
 (add-hook 'c-mode-hook 'odabai/ac-c-header-init)
 
+;; fix an auto-complete-mode and linum-mode annoyance
+(ac-linum-workaround)
+
 (provide 'odabai-ac)
