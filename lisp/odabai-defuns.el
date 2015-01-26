@@ -355,4 +355,25 @@
   (interactive)
   (find-alternate-file (concat "/sudo::" (buffer-file-name))))
 
+;; http://www.emacswiki.org/emacs/AutoIndentation
+(defadvice kill-line (before remove-whitespaces activate)
+  "If at end of line, join with following; otherwise kill line.
+Deletes whitespace at join."
+  (and (derived-mode-p 'prog-mode)
+       (eolp)
+       (not (bolp))
+       (progn
+         (forward-char 1)
+         (just-one-space 1)
+         (backward-char 2))))
+
+;; indent when I yank code in programming languages
+;; http://www.emacswiki.org/emacs/AutoIndentation
+(dolist (command '(yank yank-pop))
+  (eval `(defadvice ,command (after indent-region activate)
+           (and (not current-prefix-arg)
+                (derived-mode-p 'prog-mode)
+                (let ((mark-even-if-inactive transient-mark-mode))
+                  (indent-region (region-beginning) (region-end) nil))))))
+
 (provide 'odabai-defuns)
