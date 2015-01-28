@@ -330,8 +330,7 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
        ;; ----------------------------------------------------------------------------------------
        ;; line number color
        ;; ----------------------------------------------------------------------------------------
-       ;; (set-face-attribute 'linum nil :background "gray10")
-       ;; (set-face-attribute 'linum nil :foreground "white")
+       (linum ((t (:foreground ,base0))))
 
        ;; ----------------------------------------------------------------------------------------
        ;; magit
@@ -374,6 +373,10 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
 
        ;; iedit
        (iedit-occurrence ((t (:foreground ,orange :background ,base03 :inverse-video t))))
+
+       ;; which-func that shows which function we are in
+       (which-func ((t (:foreground ,blue))))
+       
 ))))
 
 

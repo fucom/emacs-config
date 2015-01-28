@@ -39,6 +39,7 @@ Return a list of installed packages or nil for every skipped package."
 
 ;; do not load slime
 (push '(slime nil) package-load-list)
+
 ;; Activate installed packages.
 (package-initialize nil)
 ;; update packages

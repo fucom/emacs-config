@@ -27,9 +27,12 @@
 ;; This can be extended to show more starred buffers
 ;; -------------------------------------------------------------------------------------------------
 (defun ido-ignore-but-this (name)
-  "Ignore all non-user (a.k.a. *starred*) buffers except *eshell* and *scratch*."
+  "Ignore all non-user (a.k.a. *starred*) buffers except *eshell*, *scratch* and *Messages*.
+   Always show current buffer in the listing."
   (and (string-match "^\*" name)
-       (not (or (string= name "*scratch*") (string= name "*eshell*") (string= name "*Messages*")))))
+       (not (or (string= name "*scratch*") (string-match name "\*eshell\*") (string= name "*Messages*")))
+       (not (string= name (buffer-name)))))
+
 (setq ido-ignore-buffers '("^ " ido-ignore-but-this)) ;; ignore starred buffers
 
 (provide 'odabai-ido)

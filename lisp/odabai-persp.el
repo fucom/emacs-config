@@ -42,22 +42,28 @@
           (message "Session not saved."))
       (persp-save-state-to-file persp-auto-save-fname)))
 
+  (defun odabai/persp-session-save-careless ()
+    "Save an emacs session without caring about overwriting existing session."
+    (interactive)
+    (persp-save-state-to-file))
+
   ;; function that asks the user whether he wants to restore session. It is used at start-up
   (defun odabai/persp-ask-user-restore-session ()
     (if (odabai/persp-saved-session)
         (if (y-or-n-p "Restore session? ")
             (progn
-              (odabai/persp-session-restore)
-              (delete-file (concat persp-save-dir persp-auto-save-fname))))))
+              (odabai/persp-session-restore)))))
+  ;; Honestly I prefer to keep my previous session...
+  ;;(delete-file (concat persp-save-dir persp-auto-save-fname))))))
 
   (defun odabai/persp-ask-to-save-session ()
     "Save an emacs session."
     (interactive)
     (if (y-or-n-p "Would you like to save the current session?")
-        (odabai/persp-session-save)))
+        (odabai/persp-session-save-careless)))
 
   (add-hook 'after-init-hook 'odabai/persp-ask-user-restore-session)
   (add-hook 'kill-emacs-hook 'odabai/persp-ask-to-save-session)
-  )
+  ) ;; display graphic
 
 (provide 'odabai-persp)

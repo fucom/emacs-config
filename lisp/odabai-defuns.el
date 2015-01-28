@@ -358,7 +358,7 @@
 ;; http://www.emacswiki.org/emacs/AutoIndentation
 (defadvice kill-line (before remove-whitespaces activate)
   "If at end of line, join with following; otherwise kill line.
-Deletes whitespace at join."
+   Deletes whitespace at join."
   (and (derived-mode-p 'prog-mode)
        (eolp)
        (not (bolp))
@@ -375,5 +375,20 @@ Deletes whitespace at join."
                 (derived-mode-p 'prog-mode)
                 (let ((mark-even-if-inactive transient-mark-mode))
                   (indent-region (region-beginning) (region-end) nil))))))
+
+(defun dos2unix ()
+  "Convert current buffer to unix format."
+  (interactive)
+  (set-buffer-file-coding-system 'undecided-unix 't))
+
+(defun unix2dos ()
+  "Convert current buffer to dos format."
+  (interactive)
+  (set-buffer-file-coding-system 'undecided-dos 't))
+
+;; http://stackoverflow.com/questions/17325713/looking-for-a-replace-in-string-function-in-elisp
+(defun replace-in-string (what with in)
+  "Replaces a all occurances of \"what\" with \"with\" in string \"in\"."
+  (replace-regexp-in-string (regexp-quote what) with in))
 
 (provide 'odabai-defuns)

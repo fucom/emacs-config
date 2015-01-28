@@ -1,14 +1,9 @@
 ;; todo: how home dir is shown in eshell
-;;       eshell-pcomplete : make like auto-complete inline overlay text
 ;;       -> redshank -> eldoc/cl-doc -> elisp/slime nav ->highlight-cl
 ;;       -> erase backup files after 29days
-;;       -> accelerate edit command
-;;       -> copy paste indent
 ;;       -> why does it not recognise pm-suspend ?
 ;;       -> stumpwm: see how to get number of program once started to move them like windowlist
 ;;       -> when I do C-u C-k to delete a whole line it saves only whitespaces in the yank buffer
-;;       -> when in a *balbal_file* to kill that file, the file is not listed because I exclude
-;;          most of the starred files
 
 ;; )Where I keep all my lisp and configurations for emacs
 (setq dotfiles-dir (expand-file-name "/home/odabai/.emacs.d/"))
@@ -19,17 +14,17 @@
 ;; Subpackages specific to task (e.g. mode, theme)
 (setq pkg-full
       '(odabai-defuns
+	odabai-elpa
 	odabai-backup
 	odabai-dired
 	odabai-ediff
-	odabai-elpa
 	odabai-ido
 	odabai-org
 	odabai-vlf
-	odabai-projectile
+	;; odabai-projectile !
 	odabai-persp
         ;; Right now I prefer to use perspective for sessions saving
-        odabai-desktop
+        ;; odabai-desktop !
 	odabai-prog
 	odabai-magit
 	odabai-matlab
@@ -37,14 +32,14 @@
 	odabai-keybindings
         odabai-ac
 	odabai-eshell
-	odabai-slime
+	;; odabai-slime !
         ;; very time consuming
-	;; odabai-helm
+	;; odabai-helm !
 	odabai-cpp
-	;; odabai-autopair
+	;; odabai-autopair !
 	odabai-auctex
 	odabai-theme
-        ;; odabai-snippets
+        ;; odabai-snippets !
         odabai-iedit))
 
 ;; Now load other things

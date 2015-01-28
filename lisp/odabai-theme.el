@@ -69,21 +69,15 @@
 (add-hook 'org-mode-hook (lambda () (linum-mode -1)))
 
 ;; =================================================================================================
-;; Color customization
+;; Color customization for solarized
 ;; =================================================================================================
+
 (ensure-package-installed 'color-theme)
 (require 'odabai-color-theme-solarized)
 
-;; =================================================================================================
-;; Highlights several events: such as regions that were undo-ed.
-;; =================================================================================================
-(ensure-package-installed 'volatile-highlights)
-(require 'volatile-highlights)
-(volatile-highlights-mode t)
-
-;; =================================================================================================
+;; -------------------------------------------------------------------------------------------------
 ;; Synchronise color theme
-;; =================================================================================================
+;; -------------------------------------------------------------------------------------------------
 (setq current-theme-color nil)
 (defun synchronize-theme ()
   ;; get time
@@ -100,14 +94,25 @@
     (progn
       (setq current-theme-color new-color)
       (eval current-theme-color)
-      ;(set-face-background 'show-paren-match-face (darken-my-color 'default :background )))))
+                                        ;(set-face-background 'show-paren-match-face (darken-my-color 'default :background )))))
       )))
 
 ;; update every hour the theme
-(run-with-timer 0 3600 'synchronize-theme)
+;; (run-with-timer 0 3600 'synchronize-theme)
 ;; for strange reasons, I have to call this again otherwise it won't work on terminator
-(synchronize-theme)
+;; (synchronize-theme)
+
+;; =================================================================================================
+;; Highlights several events: such as regions that were undo-ed.
+;; =================================================================================================
+(ensure-package-installed 'volatile-highlights)
+(require 'volatile-highlights)
+(volatile-highlights-mode t)
+
 ;; unfortunately I constantly work in dark environments right now
 (color-theme-solarized-dark)
 
+
 (provide 'odabai-theme)
+
+
