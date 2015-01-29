@@ -2,7 +2,7 @@
 ;; SLIME
 ;; =================================================================================================
 ;; (ensure-package-installed 'slime)
-;; (setq inferior-lisp-program (executable-find "clisp"))
+;; (setq inferior-lisp-program (executable-find "sbcl"))
 
 
 ;; From http://bc.tech.coop/blog/070515.html

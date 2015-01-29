@@ -3,8 +3,12 @@
 ;; =================================================================================================
 ;; Basic appearance
 ;; =================================================================================================
-;; ;; font size
-(set-face-attribute 'default nil :height 120)
+;; font and font size
+;; (set-face-attribute 'default nil :height 120)
+;; you can get the name of fonts by running the following in the minibuffer:
+;; set-default-font
+(set-default-font "-unknown-DejaVu Sans Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+
 ;; no tabs
 (setq-default indent-tabs-mode nil)
 
@@ -28,12 +32,9 @@
 (set-face-background 'cursor "red")
 (blink-cursor-mode -1)
 
-;; =================================================================================================
 ;; Nice emascs modeline
-;; =================================================================================================
 (require 'odabai-modeline)
 (which-function-mode 1)
-
 
 ;;  Customize text mode
 (add-hook 'text-mode-hook (lambda() (set-variable 'truncate-lines t)))
