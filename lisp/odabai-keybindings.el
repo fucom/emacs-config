@@ -41,9 +41,6 @@
 ;; you can also use (C-c q) to break lines in comments
 ;; (add-hook 'prog-mode-hook 'turn-on-auto-fill)
 
-;; replace string
-(global-set-key (kbd "C-c r") 'search-replace-simultaneously)
-
 (global-set-key (kbd "<f12>") 'create-or-kill-eshell)
 (global-set-key (kbd "C-<f12>") 'erase-eshell-buffer)
 
@@ -61,7 +58,19 @@
 (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
 
 
-;; nice search
-;; (require 'highlight-symbol)
+;; nice search: highlight-symbol
+
+;; =================================================================================================
+;; Give visual feed-back when searching for regexp
+;; =================================================================================================
+(ensure-package-installed 'visual-regexp-steroids)
+(global-set-key (kbd "C-c r") 'vr/my-search-replace-simultaneously)
+;; (define-key global-map (kbd "C-c r") 'vr/replace)
+(define-key global-map (kbd "C-c q") 'vr/query-replace)
+;; if you use multiple-cursors, this is for you:
+(define-key global-map (kbd "C-c m") 'vr/mc-mark)
+(define-key esc-map (kbd "C-r") 'vr/isearch-backward) ;; C-M-r
+(define-key esc-map (kbd "C-s") 'vr/isearch-forward) ;; C-M-s
+
 
 (provide 'odabai-keybindings)

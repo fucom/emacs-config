@@ -4,6 +4,9 @@
 ;;       -> why does it not recognise pm-suspend ?
 ;;       -> stumpwm: see how to get number of program once started to move them like windowlist
 ;;       -> when I do C-u C-k to delete a whole line it saves only whitespaces in the yank buffer
+;;       -> Problem with remembering eshell password
+;;          http://emacs.stackexchange.com/questions/5608/how-to-let-eshell-remember-sudo-password-for-two-minutes
+;;       -> use multiple cursors
 
 ;; )Where I keep all my lisp and configurations for emacs
 (setq dotfiles-dir (expand-file-name "/home/odabai/.emacs.d/"))

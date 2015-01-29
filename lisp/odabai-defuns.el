@@ -350,6 +350,15 @@
       (iedit-mode)
     (call-interactively 'replace-string)))
 
+(defun vr/my-search-replace-simultaneously (&optional arg)
+  "Search for a string if no prefix argument is provided. If a
+  prefix argument is used, search for word at point and replace
+  it simultaneously in the whole buffer."
+  (interactive "P")
+  (if (consp arg)
+      (iedit-mode)
+    (call-interactively 'vr/replace)))
+
 ;; if you need to open a root file for modification
 (defun find-alternate-file-with-sudo ()
   (interactive)

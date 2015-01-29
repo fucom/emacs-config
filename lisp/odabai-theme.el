@@ -34,23 +34,6 @@
 (require 'odabai-modeline)
 (which-function-mode 1)
 
-;; =================================================================================================
-;; colorise .txt files
-;; =================================================================================================
-(require 'ansi-color)
-
-(defun ansi-color-apply-on-region-int (beg end)
-  "interactive version of func"
-  (interactive "r")
-  (ansi-color-apply-on-region beg end))
-
-(define-derived-mode fundamental-ansi-mode fundamental-mode "fundamental ansi"
-  "Fundamental mode that understands ansi colors."
-  (require 'ansi-color)
-  (ansi-color-apply-on-region (point-min) (point-max)))
-
-(setq auto-mode-alist
-      (cons '("\\.txt\\'" . fundamental-ansi-mode) auto-mode-alist))
 
 ;;  Customize text mode
 (add-hook 'text-mode-hook (lambda() (set-variable 'truncate-lines t)))
@@ -112,6 +95,25 @@
 ;; unfortunately I constantly work in dark environments right now
 (color-theme-solarized-dark)
 
+
+;; =================================================================================================
+;; Colorise .txt files
+;; =================================================================================================
+;; (require 'ansi-color)
+;; (defun ansi-color-apply-on-region-int (beg end)
+;;   "interactive version of func"
+;;   (interactive "r")
+;;   (ansi-color-apply-on-region beg end))
+;; (define-derived-mode fundamental-ansi-mode fundamental-mode "fundamental ansi"
+;;   "Fundamental mode that understands ansi colors."
+;;   (require 'ansi-color)
+;;   (ansi-color-apply-on-region (point-min) (point-max)))
+;; (setq auto-mode-alist
+;;       (cons '("\\.txt\\'" . fundamental-ansi-mode) auto-mode-alist))
+
+;; opens file only in read-only
+(require 'tty-format)
+(add-hook 'find-file-hooks 'tty-format-guess)
 
 (provide 'odabai-theme)
 

@@ -38,6 +38,11 @@
 ;; helpful command
 ;; erase-buffer or erase-eshell-buffer
 
+;; we prefer emacs eshell
+;; http://emacs.stackexchange.com/questions/5608/how-to-let-eshell-remember-sudo-password-for-two-minutesa
+(setq eshell-prefer-lisp-functions t)
+(setq eshell-prefer-lisp-variables t)
+
 ;; remember password for sudo
 (setq password-cache t) ; enable password caching
 (setq password-cache-expiry 10) ; for 10 minutes
@@ -189,6 +194,8 @@
                                     (propertize eshell-pwd 'face `(:underline t))
                                     (propertize " $" 'face `(:foreground "green"))
                                     " "))))
+
+  (setq eshell-prompt-regexp "[\x20-\x7E]*[$] ")
   (setq eshell-highlight-prompt nil)
 
   ) ;; display graphic
