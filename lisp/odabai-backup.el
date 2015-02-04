@@ -1,4 +1,3 @@
-
 ;; ====================================================================================================
 ;; Backups and autosaves
 ;; ====================================================================================================
@@ -61,7 +60,7 @@
 
 ;; verify that we have enough space for backups
 (when (and (> (size-of-directory backup-directory) max-backup-dir-size)
-          (y-or-n-p "Backup directory has reached its maximum size. Empty it? "))
+          (y-or-n-p "Backup directory is full. Empty it? "))
   (delete-directory backup-directory t nil)
   (make-directory backup-directory t)
   (message "Backup directory emptied."))

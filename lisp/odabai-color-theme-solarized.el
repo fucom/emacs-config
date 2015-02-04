@@ -56,24 +56,6 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
         (cyan    "#2aa198")
         (green   "#859900")
 
-        (yellow "#b58900")
-        (orange "#cb4b16")
-        (red "#dc322f")
-        (magenta "#d33682")
-        (violet "#6c71c4")
-        (blue "#268bd2")
-        (cyan "#2aa198")
-        (green "#859900")
-        
-        (yellow "#b58900")
-        (orange "#cb4b16")
-        (red "#dc322f")
-        (magenta "#d33682")
-        (violet "#6c71c4")
-        (blue "#268bd2")
-        (cyan "#2aa198")
-        (green "#859900")
-
         ;; Darker and lighter accented colors
         ;; Only use these in exceptional circumstances!
         (yellow-d "#7B6000")
@@ -115,13 +97,13 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
       (rotatef base02 base2)
       (rotatef base01 base1)
       (rotatef base00 base0))
-    
+
     (color-theme-install
      `(color-theme-solarized
        ((foreground-color . ,base0)
         (background-color . ,base03)
         (background-mode . ,mode)
-        (cursor-color . ,base0))
+        (cursor-color . ,red))
        ;; basic
        (default ((t (:foreground ,base0))))
        (cursor ((t (:foreground ,base0 :background ,base03 :inverse-video t))))
@@ -129,32 +111,37 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
        (fringe ((t (:foreground ,base01 :background ,base02))))
        (header-line ((t (:foreground ,base0 :background ,base2))))
        (highlight ((t (:background ,base02))))
-       (isearch ((t (:foreground ,orange :background ,base03 :inverse-video t))))
-       (lazy-highlight ((t (:foreground ,yellow :background ,base03 :inverse-video t))))
+       (lazy-highlight ((t (:foreground ,cyan :background ,base03 :inverse-video t)))) ;; other search results
        (query-replcae ((t (:foreground ,orange :background ,base03 :inverse-video t))))
        (menu ((t (:foreground ,base0 :background ,base02))))
        (minibuffer-prompt ((t (:foreground ,blue))))
-       (mode-line
-        ((t (:foreground ,base1 :background ,base02
-                         :box (:line-width 1 :color ,base1)))))
+       (mode-line ((t (:foreground ,base1 :background ,base02 :box (:line-width 1 :color ,base1)))))
        (mode-line-buffer-id ((t (:foreground ,base1))))
-       (mode-line-inactive
-        ((t (:foreground ,base0  :background ,base02
-                         :box (:line-width 1 :color ,base02)))))
-       (region ((t (:background ,base02))))
+       (mode-line-inactive ((t (:foreground ,base0  :background ,base02 :box (:line-width 1 :color ,base02)))))
+
+       ;; (region ((t (:background ,base02 :foreground ,base0 :inverse-video nil))))
+
+       ;; asasa C-u C-x = (what-cursor-position)
+       ;; why is overlays-at not giving the overlays?
+       ;; see maybe describe-text-properties-1/describe-char; describe-text-properties
+       ;; FIXME: How to remove inverse-video when smartparens is active.
+       (region ((t (:background
+                    ,(if nil
+                         base02
+                       base02) :foreground ,base0 :inverse-video nil))))
+
+
+
        (secondary-selection ((t (:background ,base02))))
-       (trailing-whitespace ((t (:foreground ,red :inverse-video t))))
+       (trailing-whitespace ((t (:foreground "red" :inverse-video t))))
        (vertical-border ((t (:foreground ,base0))))
        ;; compilation
        (compilation-info ((t (:forground ,green :bold t))))
        (compilation-warning ((t (:foreground ,orange :bold t))))
        ;; customize
-       (custom-button
-        ((t (:background ,base02 :box (:line-width 2 :style released-button)))))
+       (custom-button ((t (:background ,base02 :box (:line-width 2 :style released-button)))))
        (custom-button-mouse ((t (:inherit custom-button :foreground ,base1))))
-       (custom-button-pressed
-        ((t (:inherit custom-button-mouse
-                      :box (:line-width 2 :style pressed-button)))))
+       (custom-button-pressed ((t (:inherit custom-button-mouse :box (:line-width 2 :style pressed-button)))))
        (custom-comment-tag ((t (:background ,base02))))
        (custom-comment-tag ((t (:background ,base02))))
        (custom-documentation ((t (:inherit default))))
@@ -162,6 +149,26 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
        (custom-link ((t (:foreground ,violet))))
        (custom-state ((t (:foreground ,green))))
        (custom-variable-tag ((t (:foreground ,orange :bold t))))
+
+       ;; -----------------------------------------------------------------------------------------------
+       ;; font-lock
+       ;; -----------------------------------------------------------------------------------------------
+       (font-lock-builtin-face ((t (:foreground ,green))))
+       (font-lock-comment-face ((t (:foreground ,base01 :italic t))))
+       (font-lock-constant-face ((t (:foreground ,cyan))))
+       (font-lock-function-name-face ((t (:foreground ,blue))))
+       (font-lock-keyword-face ((t (:foreground ,green))))
+       (font-lock-string-face ((t (:foreground ,cyan))))
+       (font-lock-type-face ((t (:foreground ,yellow))))
+       (font-lock-variable-name-face ((t (:foreground ,blue))))
+       (font-lock-warning-face ((t (:foreground ,red :bold t))))
+
+       ;; ----------------------------------------------------------------------------------------
+       ;; isearch
+       ;; ----------------------------------------------------------------------------------------
+       (isearch ((t (:foreground ,orange :background ,base03 :inverse-video t))))
+       (isearch-lazy-highlight-face ((t (:foreground ,cyan :background ,base03 :inverse-video t)))) ;; strangely the lazy-highlight face is applied
+       (isearch-fail ((t (:background ,base03 :inherit font-lock-warning-face :inverse-video t))))
 
        ;; -----------------------------------------------------------------------------------------------
        ;; diff
@@ -176,19 +183,6 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
        (emacs-wiki-bad-link-face ((t (:foreground ,red :underline t))))
        (emacs-wiki-link-face ((t (:foreground ,blue :underline t))))
        (emacs-wiki-verbatim-face ((t (:foreground ,base00 :underline t))))
-
-       ;; -----------------------------------------------------------------------------------------------
-       ;; font-lock
-       ;; -----------------------------------------------------------------------------------------------
-       (font-lock-builtin-face ((t (:foreground ,green))))
-       (font-lock-comment-face ((t (:foreground ,base01 :italic t))))
-       (font-lock-constant-face ((t (:foreground ,cyan))))
-       (font-lock-function-name-face ((t (:foreground ,blue))))
-       (font-lock-keyword-face ((t (:foreground ,green))))
-       (font-lock-string-face ((t (:foreground ,cyan))))
-       (font-lock-type-face ((t (:foreground ,yellow))))
-       (font-lock-variable-name-face ((t (:foreground ,blue))))
-       (font-lock-warning-face ((t (:foreground ,red :bold t))))
 
        ;; -----------------------------------------------------------------------------------------------
        ;; info
@@ -271,7 +265,7 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
        ;; -----------------------------------------------------------------------------------------------
        ;; show-paren
        ;; -----------------------------------------------------------------------------------------------
-       (show-paren-match-face ((t (:background ,base03 :foreground ,magenta))))
+       (show-paren-match-face ((t (:background nil :foreground nil :inverse-video t))))
        (show-paren-mismatch-face ((t (:background ,red :foreground ,base02))))
 
        ;; -----------------------------------------------------------------------------------------------
@@ -376,7 +370,7 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
 
        ;; which-func that shows which function we are in
        (which-func ((t (:foreground ,blue))))
-       
+
 ))))
 
 

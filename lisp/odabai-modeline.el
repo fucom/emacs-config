@@ -48,8 +48,8 @@
 
        ;; line and column
        " (" ;; '%02' to set to 2 chars at least; prevents flickering
-       (propertize "%02l" 'face 'font-lock-type-face) ","
-       (propertize "%02c" 'face 'font-lock-type-face) 
+       (propertize "%l" 'face 'font-lock-type-face) ","
+       (propertize "%c" 'face 'font-lock-type-face) 
        ") "
 
        ;; if which-func-mode is in effect, display which

@@ -45,10 +45,7 @@
 (defun delete-line (arg)
   (interactive "P")
   (if (consp arg)
-      (progn
-        (beginning-of-line)
-        (kill-line)
-        (kill-line))
+      (kill-whole-line)
     (kill-line arg)))
 
 ;; ----------------------------------------------------------------------------------------------------------
@@ -177,12 +174,6 @@
   (interactive "r")
   (align-regexp BEG END "\\(\\s-*\\) =" 1 0 1))
 (add-hook 'prog-mode-hook (lambda() (local-set-key (kbd "C-c =") 'align-equal-sign)))
-
-;; load .emacs file
-(global-set-key (kbd "C-c i")
-                (lambda ()
-                  (interactive)
-                  (load-file "~/.emacs.d/init.el")))
 
 ;; =================================================================================================
 ;; Undoing unvolanteering scrolls
@@ -399,5 +390,59 @@
 (defun replace-in-string (what with in)
   "Replaces a all occurances of \"what\" with \"with\" in string \"in\"."
   (replace-regexp-in-string (regexp-quote what) with in))
+
+;; list minor modes
+(defun which-active-modes ()
+  "Give a message of which minor modes are enabled in the current buffer."
+  (interactive)
+  (let ((active-modes))
+    (mapc (lambda (mode) (condition-case nil
+                             (if (and (symbolp mode) (symbol-value mode))
+                                 (add-to-list 'active-modes mode))
+                           (error nil) ))
+          minor-mode-list)
+    (message "Active modes are %s" active-modes)))
+
+;; finding overlays TODO Only works when called with keybindings
+;; (defun find-overlays-specifying (prop)
+;;   (let ((overlays (overlays-at (point)))
+;;         found)
+;;     (while overlays
+;;       (let ((overlay (car overlays)))
+;;         (if (overlay-get overlay prop)
+;;             (setq found (cons overlay found))))
+;;       (setq overlays (cdr overlays)))
+;;     found))
+
+;; =================================================================================================
+;; Emacs 24.4 pop ups a new emacs instance (frame) when going to an error during the compilation
+;; process. The following defun overrides the default display-buffer-use-some-window function to
+;; allow open the file in the same frame.
+;; =================================================================================================
+(if (and (>= emacs-major-version 24) (> emacs-minor-version 3))
+    (defun display-buffer-use-some-window (buffer alist)
+      (let* ((not-this-window (cdr (assq 'inhibit-same-window alist)))
+             (frame (or (window--frame-usable-p (selected-frame))
+                        (window--frame-usable-p (last-nonminibuffer-frame))))
+             (window
+              ;; Reuse an existing window.
+              (or (get-lru-window frame nil not-this-window)
+                  (let ((window (get-buffer-window buffer 'visible)))
+                    (unless (and not-this-window
+                                 (eq window (selected-window)))
+                      window))
+                  (get-largest-window 'visible nil not-this-window)
+                  (let ((window (get-buffer-window buffer 0)))
+                    (unless (and not-this-window
+                                 (eq window (selected-window)))
+                      window))
+                  (get-largest-window 0 not-this-window))))
+        (when (window-live-p window)
+          (prog1
+              (window--display-buffer buffer window 'reuse alist)
+            (window--even-window-heights window)
+            (unless (cdr (assq 'inhibit-switch-frame alist))
+              (window--maybe-raise-frame (window-frame window))))))))
+
 
 (provide 'odabai-defuns)

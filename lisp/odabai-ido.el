@@ -20,7 +20,7 @@
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 
 (ensure-package-installed 'ido-vertical-mode)
-(ido-vertical-mode 1)
+;; (ido-vertical-mode)
 
 ;; -------------------------------------------------------------------------------------------------
 ;; Do not list all files in switch buffer
@@ -35,11 +35,11 @@
 
 (setq ido-ignore-buffers '("^ " ido-ignore-but-this)) ;; ignore starred buffers
 
-(provide 'odabai-ido)
-
 ;; =================================================================================================
 ;; ido-imenu : It's is like imenu but with ido support
 ;; =================================================================================================
 (ensure-package-installed 'idomenu)
 
 (set-default 'imenu-auto-rescan t)
+
+(provide 'odabai-ido)

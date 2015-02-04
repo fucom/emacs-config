@@ -17,7 +17,7 @@ Return a list of installed packages or nil for every skipped package."
 
 (setq package-user-dir (concat dotfiles-dir "elpa"))
 
-(setq package-archives '(("ELPA" . "http://tromey.com/elpa/") 
+(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
                           ("gnu" . "http://elpa.gnu.org/packages/")
                           ("marmalade" . "http://marmalade-repo.org/packages/")
                           ("melpa" . "http://melpa.milkbox.net/packages/")))
@@ -36,9 +36,6 @@ Return a list of installed packages or nil for every skipped package."
                                                       "\\)")))
   (dolist (package packages)
     (require package)))
-
-;; do not load slime
-(push '(slime nil) package-load-list)
 
 ;; Activate installed packages.
 (package-initialize nil)

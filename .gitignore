@@ -1,0 +1,15 @@
+auto-save-list/
+autosaves/
+backups/
+persp-confs/
+elpa/
+bookmarks
+desktop-emacs
+savehist
+tramp
+smex-items
+ac-comphist.dat
+.bash_history
+/eshell/
+*.*~
+emacs-*

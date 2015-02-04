@@ -29,17 +29,20 @@
 (setq-default fill-column 100)
 
 ;; cursor properties
-(set-face-background 'cursor "red")
 (blink-cursor-mode -1)
 
 ;; Nice emascs modeline
 (require 'odabai-modeline)
 (which-function-mode 1)
 
+(setq-default show-trailing-whitespace nil)
+(add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
 ;;  Customize text mode
 (add-hook 'text-mode-hook (lambda() (set-variable 'truncate-lines t)))
+;; \\' stands for end of string
+;; see: http://ergoemacs.org/emacs/emacs_regex.html
+(add-to-list 'auto-mode-alist '("\\.txt\\'" . text-mode))
 (add-to-list 'auto-mode-alist '("README" . text-mode))
-(add-to-list 'auto-mode-alist '("\.txt$" . text-mode))
 
 (require 'linum)
 ;; (global-linum-mode 1)
@@ -62,24 +65,24 @@
 ;; -------------------------------------------------------------------------------------------------
 ;; Synchronise color theme
 ;; -------------------------------------------------------------------------------------------------
-(setq current-theme-color nil)
-(defun synchronize-theme ()
-  ;; get time
-  (setq hour 
-        (string-to-number 
-         (substring (current-time-string) 11 14)))
-  ;; find out best current theme
-  (if (member hour (number-sequence 11 12))
-      (setq new-color '(color-theme-solarized-light))
-    (setq new-color '(color-theme-solarized-dark)))
-  ;; update background
-  (if (eq new-color current-theme-color)
-      nil
-    (progn
-      (setq current-theme-color new-color)
-      (eval current-theme-color)
-                                        ;(set-face-background 'show-paren-match-face (darken-my-color 'default :background )))))
-      )))
+;; (setq current-theme-color nil)
+;; (defun synchronize-theme ()
+;;   ;; get time
+;;   (setq hour 
+;;         (string-to-number 
+;;          (substring (current-time-string) 11 14)))
+;;   ;; find out best current theme
+;;   (if (member hour (number-sequence 11 12))
+;;       (setq new-color '(color-theme-solarized-light))
+;;     (setq new-color '(color-theme-solarized-dark)))
+;;   ;; update background
+;;   (if (eq new-color current-theme-color)
+;;       nil
+;;     (progn
+;;       (setq current-theme-color new-color)
+;;       (eval current-theme-color)
+;;                                         ;(set-face-background 'show-paren-match-face (darken-my-color 'default :background )))))
+;;       )))
 
 ;; update every hour the theme
 ;; (run-with-timer 0 3600 'synchronize-theme)
@@ -95,7 +98,6 @@
 
 ;; unfortunately I constantly work in dark environments right now
 (color-theme-solarized-dark)
-
 
 ;; =================================================================================================
 ;; Colorise .txt files
@@ -113,9 +115,29 @@
 ;;       (cons '("\\.txt\\'" . fundamental-ansi-mode) auto-mode-alist))
 
 ;; opens file only in read-only
+;; ----------------------------
 (require 'tty-format)
 (add-hook 'find-file-hooks 'tty-format-guess)
 
+;; highlight FIXME, TODO...
+;; ----------------------------
+(add-hook 'prog-mode-hook (lambda () (turn-on-fic-mode)))
+
+;; change cursor when highlighting a region
+;; ----------------------------------------
+(add-hook 'deactivate-mark-hook (lambda () (setq cursor-type t)))
+(add-hook 'activate-mark-hook (lambda () (setq cursor-type 'bar)))
+
+;; =================================================================================================
+;; toggle between light and dark using f9-n
+;; =================================================================================================
+(defun toggle-night-color-theme ()
+  "Switch to/from night color scheme."
+  (interactive)
+  (require 'color-theme)
+  (if (eq (frame-parameter (next-frame) 'background-mode) 'dark)
+      (color-theme-solarized-light) ; restore default (light) colors
+    (color-theme-solarized-dark)))
+(global-set-key (kbd "<f9> n") 'toggle-night-color-theme)
+
 (provide 'odabai-theme)
-
-

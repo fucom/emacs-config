@@ -72,7 +72,7 @@
   (switch-to-buffer "*compilation*"))
 
 ;;  shortcut for compile command by first setting our compile command
-(setq compile-command "make -j1 -C /home/odabai/work/programs/thesis/")
+(setq compile-command "make -j1 -C /home/odabai/Desktop/tmp/")
 ;; do not keep warnings
 (setq compilation-skip-threshold 2)
 (add-hook 'c-mode-common-hook (lambda() (local-set-key (kbd "C-c v") 'compile)))
@@ -116,5 +116,9 @@
   (add-hook 'c++-mode-common-hook 'doxymacs-mode)
   (add-hook 'c-mode-common-hook 'doxymacs-mode)
   )
+
+
+(ensure-package-installed 'fic-mode)
+(setq fic-highlighted-words '("FIXME" "TODO" "BUG" "KLUDGE" "WARNING"))
 
 (provide 'odabai-cpp)

@@ -3,9 +3,6 @@
 (require 'smartparens-config)
 (smartparens-global-mode t)
 
-;; highlights matching pairs
-;; (show-smartparens-global-mode t)
-
 (defun my-open-block-c-mode (id action context)
   (when (eq action 'insert)
     (newline)

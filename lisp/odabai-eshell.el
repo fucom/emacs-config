@@ -47,6 +47,11 @@
 (setq password-cache t) ; enable password caching
 (setq password-cache-expiry 10) ; for 10 minutes
 
+;; where to look for executables
+(setenv "PATH"
+        (concat "~/bin/" ";"
+                (getenv "PATH")))
+
 (when (display-graphic-p)
   ;; =================================================================================================
   ;; Popup menu for the various possibilities
@@ -60,14 +65,19 @@
   (custom-set-faces
    '(popup-isearch-match ((t (:inherit isearch)))))
 
-  (defun popup-complete-in-region (next-func start end collection &optional predicate)
+  (defun odabai/popup-complete-in-region (next-func start end collection &optional predicate)
     (if (not complete-in-region-use-popup)
         (funcall next-func start end collection predicate)
       (let* ((prefix (buffer-substring start end))
              (completion (try-completion prefix collection predicate)) ;; see if it is sole completion
+             (completions (all-completions prefix collection predicate))
+             ;; remove space and turn it to \space
+             (completions (mapcar (lambda (cand)
+                                    (replace-in-string " " "\\\\ " cand))
+                                  completions))
              (choice (and (stringp completion)
                           (string= completion prefix) ;; if try-completion did not find a unique response (I think)
-                          (popup-menu* (all-completions prefix collection predicate) :isearch t :scroll-bar t)))  ;; propose to choose among choices in collection
+                          (popup-menu* (all-completions prefix completions predicate) :isearch t :scroll-bar t)))  ;; propose to choose among choices in collection
              (bnds (completion-boundaries pcomplete-stub candidates nil ""))
              (skip (car bnds)) ;; as the completion of ~/Desktop/t is only e.g. tmp, we do not delete ~/Desktop/
              (tail (or (and (stringp completion)
@@ -112,9 +122,7 @@
            (pcomplete-autolist pcomplete-autolist)
            (pcomplete-suffix-list pcomplete-suffix-list)
            (candidates (pcomplete-completions)))
-      ;; (popup-menu* (all-completions pcomplete-stub candidates))
-      (popup-complete-in-region nil (pcomplete-begin) (point) candidates)))
-  ;; (add-hook 'eshell-mode-hook '(lambda() (local-set-key (kbd "<tab>") 'eshell-popup-completion)))
+      (odabai/popup-complete-in-region nil (pcomplete-begin) (point) candidates)))
 
   (defun ac-pcomplete ()
     ;; eshell uses `insert-and-inherit' to insert a \t if no completion
@@ -160,7 +168,11 @@
                  (skip (- (length pcomplete-stub) (car bnds))))
             ;; We replace the stub at the beginning of each candidate by
             ;; the real buffer content.
-            (mapcar #'(lambda (cand) (concat buftext (substring cand skip)))
+            (setq cnds (mapcar #'(lambda (cand) (concat buftext (substring cand skip)))
+                               cnds))
+
+            ;; get rid of space and turn it into \space
+            (mapcar #'(lambda (cand) (replace-in-string " " "\\\\ " cand))
                     cnds))))))
 
   (defvar ac-source-pcomplete
@@ -192,12 +204,20 @@
                                         (eshell-pwd (substring eshell-pwd (max 0 (- eshell-pwd-length eshell-max-prompt-length)))))
                                    (concat
                                     (propertize eshell-pwd 'face `(:underline t))
-                                    (propertize " $" 'face `(:foreground "green"))
+                                    (propertize " $" 'face `(:foreground "#2aa198"))
                                     " "))))
 
   (setq eshell-prompt-regexp "[\x20-\x7E]*[$] ")
   (setq eshell-highlight-prompt nil)
 
   ) ;; display graphic
+
+;; Completion on commands following sudo (emacs build-in sudo) or *sudo in eshell
+(defun pcomplete/sudo ()
+  (let ((prec (pcomplete-arg 'last -1)))
+    (cond ((string-match "\*?sudo" prec)
+           (while (pcomplete-here*
+                   (funcall pcomplete-command-completion-function)
+                   (pcomplete-arg 'last) t))))))
 
 (provide 'odabai-eshell)
