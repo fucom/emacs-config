@@ -107,4 +107,10 @@
 ;; Help functions
 (define-key global-map (kbd "C-h s") 'apropos)
 
+(global-set-key (kbd "<f9> t") 'toggle-night-color-theme)
+
+(define-key global-map (kbd "<f9> m") 'mu4e)
+
+(define-key global-map (kbd "C-c b") 'backup-current-file)
+
 (provide 'odabai-keybindings)

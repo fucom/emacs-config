@@ -136,6 +136,5 @@
   (if (eq (frame-parameter (next-frame) 'background-mode) 'dark)
       (color-theme-odabai-solarized-light) ; restore default (light) colors
     (color-theme-odabai-solarized-dark)))
-(global-set-key (kbd "<f9> n") 'toggle-night-color-theme)
 
 (provide 'odabai-theme)
