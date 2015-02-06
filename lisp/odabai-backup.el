@@ -30,7 +30,7 @@
         auto-save-interval 300))          ; number of keystrokes between auto-saves (default: 300)
 
 
-(defun do-backup ()
+(defun backup-current-file ()
   "Adds a date to the end of the filename and saves it to backup-directory"
   (interactive)
   (if (buffer-file-name)
