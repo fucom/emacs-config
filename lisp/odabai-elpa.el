@@ -16,11 +16,12 @@ Return a list of installed packages or nil for every skipped package."
   packages))
 
 (setq package-user-dir (concat dotfiles-dir "elpa"))
+(add-to-list 'package-directory-list (concat dotfiles-dir "lisp/"))
 
-(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
-                          ("gnu" . "http://elpa.gnu.org/packages/")
-                          ("marmalade" . "http://marmalade-repo.org/packages/")
-                          ("melpa" . "http://melpa.milkbox.net/packages/")))
+(setq package-archives '(("ELPA"      . "http://tromey.com/elpa/")
+                         ("gnu"       . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("melpa"     . "http://melpa.milkbox.net/packages/")))
 
 ;; does not really work as it does not put required packages of each package in the load-path
 (defun require-package (&rest packages)
@@ -40,7 +41,8 @@ Return a list of installed packages or nil for every skipped package."
 ;; Activate installed packages.
 (package-initialize nil)
 ;; update packages
-(when (esk-online-p)
-  (unless package-archive-contents (package-refresh-contents)))
+(when (display-graphic-p)
+  (when (esk-online-p)
+    (unless package-archive-contents (package-refresh-contents))))
 
 (provide 'odabai-elpa)

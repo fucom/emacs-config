@@ -1,3 +1,5 @@
+;; TODO: make a keymap for C-k so that we can kill a line/end/start of file... in a easy way
+
 (global-set-key (kbd "C-z") 'goto-line)
 
 ;; scroll screen using up/down bottom
@@ -14,6 +16,8 @@
         ace-jump-char-mode
         ace-jump-word-mode))
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+;; (ensure-package-installed 'ace-jump-buffer)
+;; (global-set-key (kbd "C-x b") 'ace-jump-buffer)
 
 ;; launch imenu or idomenu if available
 (global-set-key (kbd "C-c i") (lambda ()
@@ -30,6 +34,9 @@
 (global-set-key (kbd "M-<right>") 'windmove-right)
 (global-set-key (kbd "M-<up>")    'windmove-up)
 (global-set-key (kbd "M-<down>")  'windmove-down)
+
+(global-set-key (kbd "C-x 6 v") 'split-window-vertically-ff)
+(global-set-key (kbd "C-x 6 h") 'split-window-horizontally-ff)
 
 ;; (add-hook 'c-mode-common-hook (lambda() (local-set-key (kbd "C-j") 'control-j-newline-indent)))
 

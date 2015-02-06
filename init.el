@@ -6,6 +6,13 @@
 ;;       -> Problem with remembering eshell password
 ;;          http://emacs.stackexchange.com/questions/5608/how-to-let-eshell-remember-sudo-password-for-two-minutes
 ;;       -> use multiple cursors
+;;       -> go back to previous eshel with F12.
+;;       -> write about
+;;           o emacs chmod (base7)
+;;           o how to prevent new frame in emacs 24.4
+;;           o tab completion in eshell (with video)
+;;       -> adapt region color in solarized theme if smart-parens highlights sexp.
+;;       -> clean solarized theme
 
 ;; Where I keep all my lisp and configurations for emacs
 (setq dotfiles-dir (expand-file-name "/home/odabai/.emacs.d/"))
@@ -16,10 +23,20 @@
 ;; location of emacs source code (c files)
 (setq source-directory "/home/odabai/.emacs.d/emacs-24.4/")
 
+;; make my packages as safe
+(if (boundp 'custom-enabled-themes)
+    (custom-set-variables
+     '(custom-safe-themes
+       (quote
+        ("3e8bea8a29d13ca8d345517d2461a0243c4fdd4d25739bc1f67dc00004657943"
+         "dc68acc61849ee7b03405acdd6c2999cc3874b7ba9fbb6ec6c4254dfda503a56"
+         default)))))
+
 ;; Subpackages specific to task (e.g. mode, theme)
 (setq pkg-full
-      '( odabai-defuns
-	 odabai-elpa
+      '(
+        odabai-defuns
+        odabai-elpa
 	odabai-backup
 	odabai-dired
 	odabai-ediff
@@ -79,7 +96,14 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(TeX-PDF-mode t)
+ '(custom-enabled-themes (quote (odabai-solarized-dark)))
+ '(custom-safe-themes
+   (quote
+    ("3e8bea8a29d13ca8d345517d2461a0243c4fdd4d25739bc1f67dc00004657943" "dc68acc61849ee7b03405acdd6c2999cc3874b7ba9fbb6ec6c4254dfda503a56" default)))
  '(inhibit-startup-screen t)
+ '(org-agenda-files
+   (quote
+    ("~/Dropbox/org/thesis.org" "~/Dropbox/org/general.org")))
  '(safe-local-variable-values (quote ((reftex-default-bibliography "egbib.bib")))))
 ;; Local Variables:
 ;; mode: lisp

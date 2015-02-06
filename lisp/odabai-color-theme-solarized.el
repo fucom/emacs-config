@@ -166,7 +166,7 @@ Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized."
        ;; ----------------------------------------------------------------------------------------
        ;; isearch
        ;; ----------------------------------------------------------------------------------------
-       (isearch ((t (:foreground ,orange :background ,base03 :inverse-video t))))
+       (isearch ((t (:foreground ,yellow :background ,base03 :inverse-video t))))
        (isearch-lazy-highlight-face ((t (:foreground ,cyan :background ,base03 :inverse-video t)))) ;; strangely the lazy-highlight face is applied
        (isearch-fail ((t (:background ,base03 :inherit font-lock-warning-face :inverse-video t))))
 

@@ -14,7 +14,7 @@
 (when (not (file-exists-p eshell-aliases-file))
     (eshell "new")
     (rename-buffer (concat "*create aliases*"))
-    
+
     (dolist (my-alias eshell-aliases)
       (insert (concat "alias " my-alias))
       (eshell-send-input))

@@ -24,13 +24,28 @@
   (scroll-down (prefix-numeric-value n)))
 
 ;; =================================================================================================
-;; Open file in vertical split
+;; Open file in vertical/horizontal split
+;; I bind them to C-x 6 v/h
+;; TODO It would be nice to have these features:
+;; TODO Do not split if no file was selected
+;; TODO Let user specify a function through shortcut so it is not only limited to find-file
+;; http://www.emacswiki.org/emacs/HorizontalSplitting: split-window-prefer-horizonally
 ;; =================================================================================================
-(defun vsp( ) (interactive) 
+(defun split-window-vertically-ff ()
+  "If there's only one window (excluding any possibly active minibuffer),
+   then split the current window horizontally and find file."
+  (interactive)
   (split-window-vertically)
   (other-window 1)
-  (switch-to-buffer (call-interactively 'find-file))
-  )
+  (switch-to-buffer (call-interactively 'find-file)))
+
+(defun split-window-horizontally-ff ()
+  "If there's only one window (excluding any possibly active minibuffer),
+   then split the current window horizontally and find file."
+  (interactive)
+  (split-window-horizontally)
+  (other-window 1)
+  (switch-to-buffer (call-interactively 'find-file)))
 
 ;; =========================================================================================================
 ;; Easier line/word deletion
@@ -98,7 +113,7 @@
 ;; I do not use paste-to-mark as one needs to specify where to paste before copying text
 (defun paste-to-mark(&optional arg)
   "Paste things to mark, or to the prompt in shell-mode"
-  (let ((pasteMe 
+  (let ((pasteMe
          (lambda()
            (if (string= "shell-mode" major-mode)
                (progn (comint-next-prompt 25535) (yank))
@@ -141,7 +156,7 @@
   (let* ((list (buffer-list))
          (buffer (car list)))
     (while buffer
-      (when (and (buffer-file-name buffer) 
+      (when (and (buffer-file-name buffer)
                  (not (buffer-modified-p buffer)))
         (set-buffer buffer)
         (revert-buffer t t t)
@@ -281,8 +296,8 @@
 (defun kill-other-buffers ()
   "Kill all other buffers."
   (interactive)
-  (mapc 'kill-buffer 
-        (delq (current-buffer) 
+  (mapc 'kill-buffer
+        (delq (current-buffer)
               (remove-if-not 'buffer-file-name (buffer-list)))))
 
 (defun toggle-window-split ()
@@ -444,5 +459,24 @@
             (unless (cdr (assq 'inhibit-switch-frame alist))
               (window--maybe-raise-frame (window-frame window))))))))
 
+
+;; =================================================================================================
+;; Wrap isearch at end of file
+;; http://stackoverflow.com/questions/285660/automatically-wrapping-i-search
+;; WARNING It sleeps for 0.3 seconds when search failed.
+;; TODO: Needs improvement especially with the face stuff to indicate that we wrapped.
+;; =================================================================================================
+(defadvice isearch-repeat (after isearch-no-fail activate)
+  (unless isearch-success
+    (ad-disable-advice 'isearch-repeat 'after 'isearch-no-fail)
+    (ad-activate 'isearch-repeat)
+    (copy-face 'isearch 'isearch-original)
+    (set-face-attribute 'isearch nil :inherit 'isearch :foreground "yellow" :weight 'bold)
+    (isearch-repeat (if isearch-forward 'forward))
+    (sleep-for 0.3)
+    (copy-face 'isearch-original 'isearch)
+    (ad-enable-advice 'isearch-repeat 'after 'isearch-no-fail)
+    ;; this call needs to be made to update as we enabled an advice
+    (ad-activate 'isearch-repeat)))
 
 (provide 'odabai-defuns)

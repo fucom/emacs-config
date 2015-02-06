@@ -58,9 +58,7 @@
 ;; =================================================================================================
 ;; Color customization for solarized
 ;; =================================================================================================
-
-(ensure-package-installed 'color-theme)
-(require 'odabai-color-theme-solarized)
+(ensure-package-installed 'color-theme-odabai-solarized)
 
 ;; -------------------------------------------------------------------------------------------------
 ;; Synchronise color theme
@@ -68,8 +66,8 @@
 ;; (setq current-theme-color nil)
 ;; (defun synchronize-theme ()
 ;;   ;; get time
-;;   (setq hour 
-;;         (string-to-number 
+;;   (setq hour
+;;         (string-to-number
 ;;          (substring (current-time-string) 11 14)))
 ;;   ;; find out best current theme
 ;;   (if (member hour (number-sequence 11 12))
@@ -81,7 +79,7 @@
 ;;     (progn
 ;;       (setq current-theme-color new-color)
 ;;       (eval current-theme-color)
-;;                                         ;(set-face-background 'show-paren-match-face (darken-my-color 'default :background )))))
+;; ;; (set-face-background 'show-paren-match-face (darken-my-color 'default :background )))))
 ;;       )))
 
 ;; update every hour the theme
@@ -97,7 +95,8 @@
 (volatile-highlights-mode t)
 
 ;; unfortunately I constantly work in dark environments right now
-(color-theme-solarized-dark)
+(when (display-graphic-p)
+  (color-theme-odabai-solarized-dark))
 
 ;; =================================================================================================
 ;; Colorise .txt files
@@ -134,10 +133,9 @@
 (defun toggle-night-color-theme ()
   "Switch to/from night color scheme."
   (interactive)
-  (require 'color-theme)
   (if (eq (frame-parameter (next-frame) 'background-mode) 'dark)
-      (color-theme-solarized-light) ; restore default (light) colors
-    (color-theme-solarized-dark)))
+      (color-theme-odabai-solarized-light) ; restore default (light) colors
+    (color-theme-odabai-solarized-dark)))
 (global-set-key (kbd "<f9> n") 'toggle-night-color-theme)
 
 (provide 'odabai-theme)
