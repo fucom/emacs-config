@@ -94,4 +94,6 @@
 ;; Replace mu4e completion method with ours
 (defalias 'mu4e~compose-complete-contact 'select-and-insert-contact)
 
+(setq mu4e-attachment-dir "~/Desktop/download")
+
 (provide 'odabai-mu4e)
