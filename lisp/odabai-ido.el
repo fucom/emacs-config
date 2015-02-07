@@ -23,17 +23,12 @@
 ;; (ido-vertical-mode)
 
 ;; -------------------------------------------------------------------------------------------------
-;; Do not list all files in switch buffer
-;; This can be extended to show more starred buffers
+;; Do not list all buffers.
 ;; -------------------------------------------------------------------------------------------------
-(defun ido-ignore-but-this (name)
-  "Ignore all non-user (a.k.a. *starred*) buffers except *eshell*, *scratch* and *Messages*.
-   Always show current buffer in the listing."
-  (and (string-match "^\*" name)
-       (not (or (string= name "*scratch*") (string-match name "\*eshell\*") (string= name "*Messages*")))
-       (not (string= name (buffer-name)))))
-
-(setq ido-ignore-buffers '("^ " ido-ignore-but-this)) ;; ignore starred buffers
+(defun ido-ignore-this (name)
+  "List here the files to ignore."
+  nil)
+(setq ido-ignore-buffers '("^ " ido-ignore-this))
 
 ;; =================================================================================================
 ;; ido-imenu : It's is like imenu but with ido support
