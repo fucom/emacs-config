@@ -19,6 +19,9 @@
 ;; function and variables.
 (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
 
+(setq ac-auto-show-menu t)              ; show display menu w/o asking for it
+(setq ac-delay          0)              ; show display menu immediately
+
 ;; =================================================================================================
 ;; C/C++ configuration
 ;; I will configure ac for c/cpp when the time is right.
