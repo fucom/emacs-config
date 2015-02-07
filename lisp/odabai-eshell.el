@@ -212,12 +212,19 @@
 
   ) ;; display graphic
 
-;; Completion on commands following sudo (emacs build-in sudo) or *sudo in eshell
-(defun pcomplete/sudo ()
-  (let ((prec (pcomplete-arg 'last -1)))
-    (cond ((string-match "\*?sudo" prec)
-           (while (pcomplete-here*
-                   (funcall pcomplete-command-completion-function)
-                   (pcomplete-arg 'last) t))))))
+;; =================================================================================================
+;; Fix issue especially with sudo or apt as they do not complete.
+;; =================================================================================================
+;; Option 1): Completion on commands following sudo (emacs build-in sudo) or *sudo in eshell
+;; (defun pcomplete/sudo ()
+;;   (let ((prec (pcomplete-arg 'last -1)))
+;;     (cond ((string-match "\*?sudo" prec)
+;;            (while (pcomplete-here*
+;;                    (funcall pcomplete-command-completion-function)
+;;                    (pcomplete-arg 'last) t))))))
+
+;; Option 2): Use external package
+(ensure-package-installed 'pcomplete-extension)
+(require 'pcomplete-extension)
 
 (provide 'odabai-eshell)
