@@ -7,12 +7,12 @@
 ;;          http://emacs.stackexchange.com/questions/5608/how-to-let-eshell-remember-sudo-password-for-two-minutes
 ;;       -> use multiple cursors
 ;;       -> go back to previous eshel with F12.
-;;       -> write about
-;;           o emacs chmod (base7)
-;;           o how to prevent new frame in emacs 24.4
-;;           o tab completion in eshell (with video)
 ;;       -> adapt region color in solarized theme if smart-parens highlights sexp.
 ;;       -> clean solarized theme
+;;       -> how to make persp-mode use helm (not really of importance)
+;;       -> Add to current persp every newly opened buffer (e.g. compilation, grep,...)
+;;       -> Backup directory
+;;       -> Helm sucks: Why is the buffer list not sorted in last opened buffer
 
 ;; Where I keep all my lisp and configurations for emacs
 (setq dotfiles-dir (expand-file-name "/home/odabai/.emacs.d/"))
@@ -56,7 +56,7 @@
 	odabai-eshell
 	odabai-slime
         ;; very time consuming
-	;; odabai-helm !
+	odabai-helm
 	odabai-cpp
 	;; odabai-autopair !
 	odabai-auctex
@@ -96,7 +96,6 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(TeX-PDF-mode t)
- '(custom-enabled-themes (quote (odabai-solarized-dark)))
  '(custom-safe-themes
    (quote
     ("3e8bea8a29d13ca8d345517d2461a0243c4fdd4d25739bc1f67dc00004657943" "dc68acc61849ee7b03405acdd6c2999cc3874b7ba9fbb6ec6c4254dfda503a56" default)))

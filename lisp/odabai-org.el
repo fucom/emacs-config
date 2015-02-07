@@ -21,6 +21,12 @@
       org-contacts-files (list (concat org-directory "contacts.org"))
       org-journal-dir (concat org-directory "journal/"))
 
+;; You can cycle through todo subsets using C-S left/right
+(setq org-todo-keywords
+      '((sequence "TODO" "|" "DONE")
+        (sequence "CODE" "LAUNCH" "COLLECT" "FIX" "EVALUATE" "|" "DONE" "CANCELED") ;; it does not go to this cancel
+        (sequence "|" "CANCELED")))
+
 ;; ---------------------------------------------------------------------------------------------
 ;; keybindings
 ;; ---------------------------------------------------------------------------------------------
@@ -82,7 +88,7 @@ a sound to be played"
 ;; -----------------------------------------------------------------------------------------------
 ;; our little façade-function for org-mode-notify-popup
 (defun org-mode-appt-display (min-to-app new-time msg)
-  (org-mode-notify-popup (format "Appointment in %s minute(s)" min-to-app) msg 
+  (org-mode-notify-popup (format "Appointment in %s minute(s)" min-to-app) msg
                          "/usr/share/icons/gnome/32x32/status/appointment-soon.png"))
 
 ;; If we leave Emacs running overnight - reset the appointments one minute after midnight
@@ -131,7 +137,7 @@ in it."
           (setq filenoext (match-string-no-properties 1))
           (setq imgext    (match-string-no-properties 2))
           (setq filedir   (file-name-directory filenoext))
-          
+
           ;; stripp off org-conv-img folder name extension
           (setq file-info (split-string filenoext org-conv-img))
 
@@ -149,7 +155,7 @@ in it."
             (unless (file-exists-p filedir)
               (message (concat "Creating directory: " filedir))
               (make-directory filedir t))
-            
+
             (message "%s" cmd)
             (shell-command cmd)))
         (widen)))))
