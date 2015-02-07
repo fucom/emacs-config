@@ -95,8 +95,9 @@
 (volatile-highlights-mode t)
 
 ;; unfortunately I constantly work in dark environments right now
-(when (display-graphic-p)
-  (color-theme-odabai-solarized-dark))
+(if (display-graphic-p)
+    (color-theme-odabai-solarized-dark)
+  (load-theme 'wonbat))
 
 ;; =================================================================================================
 ;; Colorise .txt files
@@ -117,6 +118,15 @@
 ;; ----------------------------
 (require 'tty-format)
 (add-hook 'find-file-hooks 'tty-format-guess)
+
+;; mark down mode (.md)
+;; --------------------
+(ensure-package-installed 'markdown-mode)
+(autoload 'markdown-mode "markdown-mode"
+  "Major mode for editing Markdown files" t)
+(add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 
 ;; highlight FIXME, TODO...
 ;; ----------------------------
