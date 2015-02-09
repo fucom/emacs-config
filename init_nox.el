@@ -8,6 +8,12 @@
 ;; disable auto save
 (setq auto-save-default nil)
 
+;; font
+(set-default-font "-unknown-DejaVu Sans Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+
+;; no tabs
+(setq-default indent-tabs-mode nil)
+
 ;; configuration for various modes
 (require 'odabai-elpa)
 (require 'odabai-defuns)
@@ -34,5 +40,8 @@
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+
+(require 'moe-theme)
+(moe-dark)
 
 ;;(load-theme 'wombat)

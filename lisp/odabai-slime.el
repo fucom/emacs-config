@@ -7,17 +7,20 @@
 
 ;; ATTENTION: Slime overrides some keybindings associated to C-c which should be reserverd to user
 ;; keybindings (http://www.emacswiki.org/emacs/SlimeMode)
-(add-hook 'slime-mode-hook 
-          (defun slime-sanitize-bindings ()
-            "Removes SLIME's keybinding on C-c x"
-            (cond ((boundp 'slime-mode-map)
-                   (define-key slime-mode-map (kbd "C-c x") nil)
-                   (define-key slime-mode-map (kbd "C-c C-c") nil)
-                   (define-key slime-mode-map (kbd "C-c C-k") nil)
-                   ;; FIXME Momentarily until I fix the problem with "not connected"
-                   (define-key slime-mode-map (kbd "C-x C-e") nil)
-                   (message "slime keybinding on C-c x has been sanitized"))
-                  ('t (message "slime keybindings not sanitized")))))
+;; (add-hook 'slime-mode-hook
+;;           (defun slime-sanitize-bindings ()
+;;             "Removes SLIME's keybinding on C-c x"
+;;             (cond ((boundp 'slime-mode-map)
+;;                    ;; FIXME Momentarily until I fix the problem with "not connected"
+;;                    (define-key slime-mode-map (kbd "C-c x") nil)
+;;                    (define-key slime-mode-map (kbd "C-c C-c") nil)
+;;                    (define-key slime-mode-map (kbd "C-c C-k") nil)
+;;                    (define-key slime-mode-map (kbd "C-x C-e") nil)
+;;                    (message "slime keybinding on C-c x has been sanitized")
+;;                    (message "slime keybinding on C-c C-c has been sanitized")
+;;                    (message "slime keybinding on C-c C-e has been sanitized")
+;;                    (message "slime keybinding on C-c C-k has been sanitized"))
+;;                   ('t (message "slime keybindings not sanitized")))))
 
 ;; From http://bc.tech.coop/blog/070515.html
 (defun lispdoc ()

@@ -95,5 +95,10 @@
 (defalias 'mu4e~compose-complete-contact 'select-and-insert-contact)
 
 (setq mu4e-attachment-dir "~/Desktop/download")
+;; disable inline images
+(setq mu4e-view-show-images nil)
+;; use imagemagick, if available
+(when (fboundp 'imagemagick-register-types)
+  (imagemagick-register-types))
 
 (provide 'odabai-mu4e)

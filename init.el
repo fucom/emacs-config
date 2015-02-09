@@ -13,6 +13,9 @@
 ;;       -> Add to current persp every newly opened buffer (e.g. compilation, grep,...)
 ;;       -> Backup directory
 ;;       -> Helm sucks: Why is the buffer list not sorted in last opened buffer
+;;       -> better commeting using dwim. Advice it
+;;       -> copy whole sexp with C-M-<space> and normal behaviour with prefix argument.
+;;       -> killing whole line, to beginning of line,...
 
 ;; Where I keep all my lisp and configurations for emacs
 (setq dotfiles-dir (expand-file-name "/home/odabai/.emacs.d/"))
