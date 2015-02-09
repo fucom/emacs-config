@@ -20,11 +20,9 @@
 ;; (global-set-key (kbd "C-x b") 'ace-jump-buffer)
 
 ;; launch imenu or idomenu if available
-(global-set-key (kbd "C-c i") (lambda ()
-                                (interactive)
-                                (if (package-installed-p 'idomenu)
-                                    (idomenu)
-                                  (imenu))))
+(global-set-key (kbd "C-c i") (cond ((package-installed-p 'helm) 'helm-imenu)
+                                    ((package-installed-p 'idomenu) 'idomenu)
+                                    (t imenu)))
 
 ;; ==========================================================================================
 ;; better window navigation
