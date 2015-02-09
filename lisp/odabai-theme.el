@@ -7,6 +7,7 @@
 ;; (set-face-attribute 'default nil :height 120)
 ;; you can get the name of fonts by running the following in the minibuffer:
 ;; set-default-font
+;; (set-default-font "-unknown-Inconsolata-normal-normal-normal-*-16-*-*-*-m-0-iso10646-1")
 (set-default-font "-unknown-DejaVu Sans Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 
 ;; no tabs
@@ -42,7 +43,7 @@
 ;; \\' stands for end of string
 ;; see: http://ergoemacs.org/emacs/emacs_regex.html
 (add-to-list 'auto-mode-alist '("\\.txt\\'" . text-mode))
-(add-to-list 'auto-mode-alist '("README" . text-mode))
+(add-to-list 'auto-mode-alist '("^README$" . text-mode))
 
 (require 'linum)
 ;; (global-linum-mode 1)
@@ -146,5 +147,11 @@
   (if (eq (frame-parameter (next-frame) 'background-mode) 'dark)
       (color-theme-odabai-solarized-light) ; restore default (light) colors
     (color-theme-odabai-solarized-dark)))
+
+;; Browsing through window configurations
+;; Use C-c left and C-c right
+;; It is espeacially useful for maximizing current buffer
+(when (fboundp 'winner-mode)
+  (winner-mode 1))
 
 (provide 'odabai-theme)
