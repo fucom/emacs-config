@@ -57,7 +57,7 @@
 (add-hook 'org-mode-hook (lambda () (linum-mode -1)))
 
 ;; =================================================================================================
-;; Color customization for solarized
+;; Color themes
 ;; =================================================================================================
 (ensure-package-installed 'color-theme-odabai-solarized)
 

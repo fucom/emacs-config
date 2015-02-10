@@ -2,9 +2,13 @@
   ;; ======================================================================================================
   ;; Completion in M-x and find-file
   ;; ======================================================================================================
-  (if (not (locate-library "helm"))
-      (ensure-package-installed 'helm))
+  (ensure-package-installed 'helm)
+  (ensure-package-installed 'helm-mt)
   (require 'helm-config)
+  (require 'helm-mt)
+
+  (global-set-key (kbd "C-x c") 'helm-command-prefix)
+  (global-set-key (kbd "C-x t") 'helm-mt)
 
   (setq helm-M-x-fuzzy-match t) ;; optional fuzzy matching for helm-M-x
   (global-set-key (kbd "M-x") 'helm-M-x)

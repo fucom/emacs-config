@@ -81,7 +81,7 @@
 ;; Give visual feed-back when searching for regexp
 ;; =================================================================================================
 (ensure-package-installed 'visual-regexp-steroids)
-(global-set-key (kbd "C-c r") 'vr/my-search-replace-simultaneously)
+(global-set-key (kbd "C-c r") 'vr/my-search-replace-simultaneously) ; uses vr/replace!
 ;; (define-key global-map (kbd "C-c r") 'vr/replace)
 (define-key global-map (kbd "C-c q") 'vr/query-replace)
 ;; if you use multiple-cursors, this is for you:
@@ -110,5 +110,7 @@
 (define-key global-map (kbd "<f9> m") 'mu4e)
 
 (define-key global-map (kbd "C-c b") 'backup-current-file)
+
+(global-set-key (kbd "<f8>") (lambda () (interactive) (ansi-term "/bin/bash")))
 
 (provide 'odabai-keybindings)

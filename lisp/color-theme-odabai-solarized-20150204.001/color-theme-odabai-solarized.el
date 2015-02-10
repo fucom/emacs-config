@@ -125,7 +125,7 @@
 
 
       (secondary-selection (:background ,base02))
-      (trailing-whitespace (:foreground "red" :inverse-video t))
+      (trailing-whitespace (:foreground "yellow" :inverse-video t))
       (vertical-border (:foreground ,base0))
       ;; compilation
       (compilation-info (:forground ,green :bold t))
@@ -362,6 +362,17 @@
 
       ;; which-func that shows which function we are in
       (which-func (:foreground ,blue))
+
+      ;; ansi-term
+      (term (:foreground nil :background nil :inherit default))
+      (term-color-black (:foreground ,base0 :background ,base03))
+      (term-color-red (:foreground ,red :background ,red))
+      (term-color-green (:foreground ,green :background ,green))
+      (term-color-yellow (:foreground ,yellow :background ,yellow))
+      (term-color-blue (:foreground ,blue :background ,blue))
+      (term-color-magenta (:foreground ,magenta :background ,magenta))
+      (term-color-cyan (:foreground ,cyan :background ,cyan))
+      (term-color-white (:foreground ,base03 :BACKGROUND ,base03))
       ))))
 
 (defmacro color-theme-odabai-solarized--define-theme (mode)
@@ -375,7 +386,11 @@ Argument MODE: 'light or 'dark"
        ;; create the correct colors
        (color-theme-odabai-solarized--with-colors
         ',mode
-        (apply 'custom-theme-set-faces ',name (color-theme-odabai-solarized--face-specs)))
+        (apply 'custom-theme-set-faces ',name (color-theme-odabai-solarized--face-specs))
+        (custom-theme-set-variables
+         ',name
+         `(ansi-color-names-vector (vector "Black" ,red ,green ,yellow ,blue ,magenta ,cyan ,base03)))
+        )
        (provide-theme ',name))))
 
 (defun color-theme-odabai-solarized (mode)

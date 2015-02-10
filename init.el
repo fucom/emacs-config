@@ -16,6 +16,8 @@
 ;;       -> better commeting using dwim. Advice it
 ;;       -> copy whole sexp with C-M-<space> and normal behaviour with prefix argument.
 ;;       -> killing whole line, to beginning of line,...
+;;       -> adapt ansi-color for solarized
+;;       -> improve compile command to dwim (http://www.emacswiki.org/emacs/CompileCommand)
 
 ;; Where I keep all my lisp and configurations for emacs
 (setq dotfiles-dir (expand-file-name "/home/odabai/.emacs.d/"))
@@ -99,13 +101,14 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(TeX-PDF-mode t)
+ '(custom-enabled-themes (quote (odabai-solarized-dark)))
  '(custom-safe-themes
    (quote
     ("3e8bea8a29d13ca8d345517d2461a0243c4fdd4d25739bc1f67dc00004657943" "dc68acc61849ee7b03405acdd6c2999cc3874b7ba9fbb6ec6c4254dfda503a56" default)))
  '(inhibit-startup-screen t)
  '(org-agenda-files
    (quote
-    ("~/Dropbox/org/thesis.org" "~/Dropbox/org/general.org")))
+    ("~/Dropbox/org/general.org" "~/Dropbox/org/thesis.org")))
  '(safe-local-variable-values (quote ((reftex-default-bibliography "egbib.bib")))))
 ;; Local Variables:
 ;; mode: lisp
