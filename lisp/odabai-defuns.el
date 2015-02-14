@@ -184,10 +184,12 @@
 ;; characters will be deleted from it, starting at the end (unless it's longer for the purposes of
 ;; alignment, of course)
 ;; - repeat: well, this is obvious, I think
+;; - \s- stands for whitespace char in emacs lisp
+;; I do not use (interactive "r") as proposed in orignal solution as it uses points instead of markers.
 ;; =======================================================================================================
-(defun align-equal-sign (BEG END)
-  (interactive "r")
-  (align-regexp BEG END "\\(\\s-*\\) =" 1 0 1))
+(defun align-equal-sign ()
+  (interactive)
+  (align-regexp (region-beginning) (region-end) "\\(\\s-*\\) =" 1 0 1))
 (add-hook 'prog-mode-hook (lambda() (local-set-key (kbd "C-c =") 'align-equal-sign)))
 
 ;; =================================================================================================
