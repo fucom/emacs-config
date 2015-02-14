@@ -62,7 +62,9 @@
     (if (y-or-n-p "Would you like to save the current session?")
         (odabai/persp-session-save-careless)))
 
-  (add-hook 'after-init-hook 'odabai/persp-ask-user-restore-session)
+  ;; I prefere to restore manually when need using C-c p l
+  ;; (persp-load-state-from-file)
+  ;; (add-hook 'after-init-hook 'odabai/persp-ask-user-restore-session)
   (add-hook 'kill-emacs-hook 'odabai/persp-ask-to-save-session)
   ) ;; display graphic
 
