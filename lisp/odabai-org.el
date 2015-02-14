@@ -109,6 +109,13 @@ a sound to be played"
 ;; file for export
 (add-hook 'org-export-before-processing-hook #'odabai/org-include-img-from-pdf)
 
+;; Org shouldn't put html table properties when exporting
+(setq org-html-table-default-attributes nil)
+
+;; Let's make a nice postamble
+(setq org-html-postamble-format '(("en" "<p class=\"author\">Author: %a (%e)</p>\n<p class=\"date\">Date: %d</p>\n")))
+(setq org-html-postamble t)
+
 (defun odabai/org-include-img-from-pdf (&rest ignore)
 "Convert the pdf files to image files. Only looks at #HEADER: lines that have \":convertfrompdf t\".
 This function does nothing if not in org-mode, so you can safely add it to `before-save-hook'.
