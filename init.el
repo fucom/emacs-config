@@ -18,6 +18,7 @@
 ;;       -> killing whole line, to beginning of line,...
 ;;       -> adapt ansi-color for solarized
 ;;       -> improve compile command to dwim (http://www.emacswiki.org/emacs/CompileCommand)
+;;       -> write the module as helm-mt for eshell
 
 ;; Where I keep all my lisp and configurations for emacs
 (setq dotfiles-dir (expand-file-name "/home/odabai/.emacs.d/"))
@@ -61,7 +62,7 @@
 	odabai-eshell
 	odabai-slime
         ;; very time consuming
-	odabai-helm
+	;; odabai-helm
 	odabai-cpp
 	;; odabai-autopair !
 	odabai-auctex
@@ -104,11 +105,11 @@
  '(custom-enabled-themes (quote (odabai-solarized-dark)))
  '(custom-safe-themes
    (quote
-    ("3e8bea8a29d13ca8d345517d2461a0243c4fdd4d25739bc1f67dc00004657943" "dc68acc61849ee7b03405acdd6c2999cc3874b7ba9fbb6ec6c4254dfda503a56" default)))
+    ("cbef37d6304f12fb789f5d80c2b75ea01465e41073c30341dc84c6c0d1eb611d" "3e8bea8a29d13ca8d345517d2461a0243c4fdd4d25739bc1f67dc00004657943" "dc68acc61849ee7b03405acdd6c2999cc3874b7ba9fbb6ec6c4254dfda503a56" default)))
  '(inhibit-startup-screen t)
  '(org-agenda-files
    (quote
-    ("~/Dropbox/org/general.org" "~/Dropbox/org/thesis.org")))
+    ("~/Dropbox/org/thesis.org" "~/Dropbox/org/general.org")))
  '(safe-local-variable-values (quote ((reftex-default-bibliography "egbib.bib")))))
 ;; Local Variables:
 ;; mode: lisp
