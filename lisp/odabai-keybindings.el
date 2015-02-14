@@ -79,15 +79,17 @@
 
 ;; =================================================================================================
 ;; Give visual feed-back when searching for regexp
+;; https://github.com/benma/visual-regexp-steroids.el/blob/master/README.md
 ;; =================================================================================================
 (ensure-package-installed 'visual-regexp-steroids)
+(require 'visual-regexp-steroids)
 (global-set-key (kbd "C-c r") 'vr/my-search-replace-simultaneously) ; uses vr/replace!
-;; (define-key global-map (kbd "C-c r") 'vr/replace)
 (define-key global-map (kbd "C-c q") 'vr/query-replace)
 ;; if you use multiple-cursors, this is for you:
 (define-key global-map (kbd "C-c m") 'vr/mc-mark)
-(define-key esc-map (kbd "C-r") 'vr/isearch-backward) ;; C-M-r
-(define-key esc-map (kbd "C-s") 'vr/isearch-forward) ;; C-M-s
+;; I prefer to use the emacs commands here. Seem to work better
+;; (define-key esc-map (kbd "C-r") 'vr/isearch-backward) ;; C-M-r
+;; (define-key esc-map (kbd "C-s") 'vr/isearch-forward) ;; C-M-s
 
 ;; =================================================================================================
 ;; Nice rectangular visual feed-back mode. It is not that powerful as the emacs 24.4 version
