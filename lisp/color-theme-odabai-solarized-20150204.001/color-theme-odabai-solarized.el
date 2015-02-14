@@ -115,14 +115,12 @@
       ;; (region ((t (:background ,base02 :foreground ,base0 :inverse-video nil))
 
       ;; asasa C-u C-x = (what-cursor-position)
-      ;; why is overlays-at not giving the overlays?
-      ;; see maybe describe-text-properties-1/describe-char; describe-text-properties
+      ;; to find out if overlay is active: (equal (get-char-property (point) 'face) 'show-paren-match)
       ;; FIXME: How to remove inverse-video when smartparens is active.
       (region (:background
                    ,(if nil
                         base02
                       base02) :foreground ,base0 :inverse-video nil))
-
 
       (secondary-selection (:background ,base02))
       (trailing-whitespace (:foreground "yellow" :inverse-video t))
@@ -373,6 +371,9 @@
       (term-color-magenta (:foreground ,magenta :background ,magenta))
       (term-color-cyan (:foreground ,cyan :background ,cyan))
       (term-color-white (:foreground ,base03 :BACKGROUND ,base03))
+
+      ;; visual regexp
+      (vr/match-0 (:inherit isearch))
       ))))
 
 (defmacro color-theme-odabai-solarized--define-theme (mode)
