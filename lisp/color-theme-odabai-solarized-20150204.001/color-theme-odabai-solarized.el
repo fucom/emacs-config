@@ -4,6 +4,8 @@
 ;;;      - colors global
 ;;; Code
 
+(require 'cl)
+
 (defcustom solarized-height-minus-1 0.8
   "Font size -1."
   :type 'number
@@ -361,6 +363,9 @@
       ;; which-func that shows which function we are in
       (which-func (:foreground ,blue))
 
+      ;; visual regexp
+      (vr/match-0 (:inherit isearch))
+
       ;; ansi-term
       (term (:foreground nil :background nil :inherit default))
       (term-color-black (:foreground ,base0 :background ,base03))
@@ -370,10 +375,10 @@
       (term-color-blue (:foreground ,blue :background ,blue))
       (term-color-magenta (:foreground ,magenta :background ,magenta))
       (term-color-cyan (:foreground ,cyan :background ,cyan))
-      (term-color-white (:foreground ,base03 :BACKGROUND ,base03))
+      (term-color-white (:foreground ,base03 :background ,base03))
 
-      ;; visual regexp
-      (vr/match-0 (:inherit isearch))
+      ;; FIXME I do get the following error if I put (vr/match-0 (:inherit isearch)) as last line
+      ;; Eager macro-expansion failure: (error "Lisp nesting exceeds `max-lisp-eval-depth'")
       ))))
 
 (defmacro color-theme-odabai-solarized--define-theme (mode)
@@ -390,7 +395,7 @@ Argument MODE: 'light or 'dark"
         (apply 'custom-theme-set-faces ',name (color-theme-odabai-solarized--face-specs))
         (custom-theme-set-variables
          ',name
-         `(ansi-color-names-vector (vector "Black" ,red ,green ,yellow ,blue ,magenta ,cyan ,base03)))
+         `(ansi-color-names-vector (vector "Black" ,red ,green ,yellow ,blue ,magenta ,cyan ,base0)))
         )
        (provide-theme ',name))))
 

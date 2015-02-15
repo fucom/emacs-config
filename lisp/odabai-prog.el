@@ -6,13 +6,6 @@
 ;;===============================================================================================
 (ensure-package-installed 'indent-guide)
 
-;;===============================================================================================
-;; Hideshow
-;;===============================================================================================
-;; (ensure-package-installed 'hideshow-org))
-;; (require 'hideshow-org)
-;; (global-set-key "\C-ch" 'hs-org/minor-mode)
-
 ;; Do not ask user for closing confirmation if we already ask for desktop session saving.
 (unless (or (and (boundp 'ask-to-manage-sessions) ask-to-manage-sessions) (and (boundp 'ask-to-save-destop) ask-to-save-desktop))
   (add-hook 'prog-mode-hook (lambda() (local-set-key (kbd "C-x C-c") 'ask-before-closing))))

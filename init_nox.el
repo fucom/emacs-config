@@ -8,6 +8,10 @@
 ;; disable auto save
 (setq auto-save-default nil)
 
+(tool-bar-mode   -1)
+(menu-bar-mode   -1)
+(scroll-bar-mode -1)
+
 ;; font
 (set-default-font "-unknown-DejaVu Sans Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 
