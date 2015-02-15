@@ -60,6 +60,25 @@
 ;; Color themes
 ;; =================================================================================================
 (ensure-package-installed 'color-theme-odabai-solarized)
+(ensure-package-installed 'zenburn-theme)
+
+;; the first theme is selected first at startup
+(defcustom my-color-themes '(odabai-solarized-dark odabai-solarized-light zenburn)
+  "Theme to cycle through."
+  :type 'symbol
+  :group 'odabai)
+
+(defvar my-color-themes-circular (odabai--make-circular my-color-themes))
+
+;; =================================================================================================
+;; cycle between color themes using <f9>-t
+;; Tipp: (eq (frame-parameter (next-frame) 'background-mode) 'dark) lets you know the bg brightness
+;; =================================================================================================
+(defun cycle-color-theme ()
+  "Cycle through color themes listed in \\[[my-color-themes]]."
+  (interactive)
+  (let ((next-theme (pop my-color-themes-circular)))
+    (load-theme next-theme )))
 
 ;; -------------------------------------------------------------------------------------------------
 ;; Synchronise color theme
@@ -97,7 +116,7 @@
 
 ;; unfortunately I constantly work in dark environments right now
 (if (display-graphic-p)
-    (color-theme-odabai-solarized-dark)
+    (cycle-color-theme)
   (load-theme 'wonbat))
 
 ;; =================================================================================================
@@ -137,16 +156,6 @@
 ;; ----------------------------------------
 (add-hook 'deactivate-mark-hook (lambda () (setq cursor-type t)))
 (add-hook 'activate-mark-hook (lambda () (setq cursor-type 'bar)))
-
-;; =================================================================================================
-;; toggle between light and dark using f9-n
-;; =================================================================================================
-(defun toggle-night-color-theme ()
-  "Switch to/from night color scheme."
-  (interactive)
-  (if (eq (frame-parameter (next-frame) 'background-mode) 'dark)
-      (color-theme-odabai-solarized-light) ; restore default (light) colors
-    (color-theme-odabai-solarized-dark)))
 
 ;; Browsing through window configurations
 ;; Use C-c left and C-c right
