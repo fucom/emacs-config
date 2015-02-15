@@ -107,7 +107,7 @@
 ;; Help functions
 (define-key global-map (kbd "C-h s") 'apropos)
 
-(global-set-key (kbd "<f9> t") 'toggle-night-color-theme)
+(global-set-key (kbd "<f9> t") 'cycle-color-theme)
 
 (define-key global-map (kbd "<f9> m") 'mu4e)
 

@@ -481,4 +481,13 @@
     ;; this call needs to be made to update as we enabled an advice
     (ad-activate 'isearch-repeat)))
 
+;; =================================================================================================
+;; Return a circular list
+;; =================================================================================================
+(defun odabai--make-circular (items)
+  "Returns the list in items as a circular list that is the last element is pointing to its
+beginning."
+  (setf (cdr (last items)) items)
+  items)
+
 (provide 'odabai-defuns)
