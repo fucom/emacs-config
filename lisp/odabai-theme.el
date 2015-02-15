@@ -61,9 +61,11 @@
 ;; =================================================================================================
 (ensure-package-installed 'color-theme-odabai-solarized)
 (ensure-package-installed 'zenburn-theme)
+(ensure-package-installed 'moe-theme)
+(require 'moe-theme)
 
 ;; the first theme is selected first at startup
-(defcustom my-color-themes '(odabai-solarized-dark odabai-solarized-light zenburn)
+(defcustom my-color-themes '(odabai-solarized-dark moe-dark odabai-solarized-light zenburn)
   "Theme to cycle through."
   :type 'symbol
   :group 'odabai)
@@ -74,10 +76,13 @@
 ;; cycle between color themes using <f9>-t
 ;; Tipp: (eq (frame-parameter (next-frame) 'background-mode) 'dark) lets you know the bg brightness
 ;; =================================================================================================
+(defvar odabai-current-theme-name nil)
 (defun cycle-color-theme ()
   "Cycle through color themes listed in \\[[my-color-themes]]."
   (interactive)
+  (disable-theme odabai-current-theme-name) ; important otherwise colors get mixed
   (let ((next-theme (pop my-color-themes-circular)))
+    (setq odabai-current-theme-name next-theme)
     (load-theme next-theme )))
 
 ;; -------------------------------------------------------------------------------------------------
