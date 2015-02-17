@@ -487,7 +487,8 @@
 (defun odabai--make-circular (items)
   "Returns the list in items as a circular list that is the last element is pointing to its
 beginning."
-  (setf (cdr (last items)) items)
-  items)
+  (setq items-circular (copy-list items))
+  (setf (cdr (last items-circular)) items-circular)
+  items-circular)
 
 (provide 'odabai-defuns)
