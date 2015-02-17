@@ -44,8 +44,10 @@
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.mkd\\'" . markdown-mode))
 
-(require 'moe-theme)
-(moe-dark)
-
-;;(load-theme 'wombat)
+;; (require 'moe-theme)
+;; (require 'zenburn-theme)
+;; (load-theme 'zenburn t) ;; t is important to avoid asking for confirmation
+(ensure-package-installed 'color-theme-odabai-solarized)
+(load-theme 'odabai-solarized-dark t)

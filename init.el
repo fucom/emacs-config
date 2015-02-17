@@ -8,7 +8,6 @@
 ;;       -> use multiple cursors
 ;;       -> go back to previous eshel with F12.
 ;;       -> adapt region color in solarized theme if smart-parens highlights sexp.
-;;       -> clean solarized theme
 ;;       -> how to make persp-mode use helm (not really of importance)
 ;;       -> Add to current persp every newly opened buffer (e.g. compilation, grep,...)
 ;;       -> Backup directory
@@ -16,9 +15,10 @@
 ;;       -> better commeting using dwim. Advice it
 ;;       -> copy whole sexp with C-M-<space> and normal behaviour with prefix argument.
 ;;       -> killing whole line, to beginning of line,...
-;;       -> adapt ansi-color for solarized
 ;;       -> improve compile command to dwim (http://www.emacswiki.org/emacs/CompileCommand)
 ;;       -> write the module as helm-mt for eshell
+;;       -> solarized-theme use lookup table for 256 (https://github.com/sellout/emacs-color-theme-solarized/blob/master/solarized-definitions.el)
+;;       -> learn ibuffer ;)
 
 ;; Where I keep all my lisp and configurations for emacs
 (setq dotfiles-dir (expand-file-name "/home/odabai/.emacs.d/"))
@@ -102,10 +102,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(TeX-PDF-mode t)
- '(custom-enabled-themes (quote (odabai-solarized-dark)))
+ '(ansi-color-names-vector
+   ["#303030" "#ff4b4b" "#d7ff5f" "#fce94f" "#5fafd7" "#d18aff" "#afd7ff" "#c6c6c6"])
  '(custom-safe-themes
    (quote
-    ("cbef37d6304f12fb789f5d80c2b75ea01465e41073c30341dc84c6c0d1eb611d" "3e8bea8a29d13ca8d345517d2461a0243c4fdd4d25739bc1f67dc00004657943" "dc68acc61849ee7b03405acdd6c2999cc3874b7ba9fbb6ec6c4254dfda503a56" default)))
+    ("d50ab16e07f2a4b2bb16e12cd27d4c6a7a79396631c50f6fc46c0d5899acd81d" "cbef37d6304f12fb789f5d80c2b75ea01465e41073c30341dc84c6c0d1eb611d" "3e8bea8a29d13ca8d345517d2461a0243c4fdd4d25739bc1f67dc00004657943" "dc68acc61849ee7b03405acdd6c2999cc3874b7ba9fbb6ec6c4254dfda503a56" default)))
  '(inhibit-startup-screen t)
  '(org-agenda-files
    (quote
