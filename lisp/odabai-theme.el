@@ -66,7 +66,7 @@
 
 ;; the first theme is selected first at startup
 (defcustom my-color-themes '(odabai-solarized-dark moe-dark odabai-solarized-light zenburn)
-  "Theme to cycle through."
+  "Theme to cycle through. The startup theme is given by the first theme."
   :type 'symbol
   :group 'odabai)
 
@@ -77,13 +77,17 @@
 ;; Tipp: (eq (frame-parameter (next-frame) 'background-mode) 'dark) lets you know the bg brightness
 ;; =================================================================================================
 (defvar odabai-current-theme-name nil)
-(defun cycle-color-theme ()
-  "Cycle through color themes listed in \\[[my-color-themes]]."
-  (interactive)
+(defun cycle-color-theme (&optional n)
+  "Cycle through color themes listed in `my-color-themes'."
+  (interactive "P")
   (disable-theme odabai-current-theme-name) ; important otherwise colors get mixed
+  (setq value-n (prefix-numeric-value n))
+  (setq steps (if (< value-n 0) (+ (length my-color-themes) value-n) value-n))
+  (loop repeat (- steps 1)
+        do (pop my-color-themes-circular))
   (let ((next-theme (pop my-color-themes-circular)))
     (setq odabai-current-theme-name next-theme)
-    (load-theme next-theme )))
+    (load-theme next-theme t)))
 
 ;; -------------------------------------------------------------------------------------------------
 ;; Synchronise color theme
@@ -120,9 +124,7 @@
 (volatile-highlights-mode t)
 
 ;; unfortunately I constantly work in dark environments right now
-(if (display-graphic-p)
-    (cycle-color-theme)
-  (load-theme 'wonbat))
+(cycle-color-theme)
 
 ;; =================================================================================================
 ;; Colorise .txt files
@@ -152,6 +154,7 @@
 (add-to-list 'auto-mode-alist '("\\.text\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.mkd\\'" . markdown-mode))
 
 ;; highlight FIXME, TODO...
 ;; ----------------------------
