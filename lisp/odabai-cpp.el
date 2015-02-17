@@ -117,8 +117,4 @@
   (add-hook 'c-mode-common-hook 'doxymacs-mode)
   )
 
-
-(ensure-package-installed 'fic-mode)
-(setq fic-highlighted-words '("FIXME" "TODO" "BUG" "KLUDGE" "WARNING"))
-
 (provide 'odabai-cpp)

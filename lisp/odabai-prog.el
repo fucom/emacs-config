@@ -17,4 +17,9 @@
 (setq show-paren-delay 0)
 (setq show-paren-style 'expression)
 
+
+(ensure-package-installed 'fic-mode)
+(setq fic-highlighted-words '("FIXME" "TODO" "BUG" "KLUDGE" "WARNING"))
+(require 'fic-mode)              ; it is important to require this package due to odabai-solarized-*
+
 (provide 'odabai-prog)
