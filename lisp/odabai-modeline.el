@@ -4,26 +4,22 @@
       (defface buffer-file-name-face
         '(
           (((class color) (min-colors 8))
-           :background "#8b8682" :foreground "white")
-          (t :inverse-video t))
+           :foreground "#F2804F"))
         "Basic face for highlight buffer name in modline."
         ))
   (progn
     (defface buffer-file-name-face
       '(
         (((class color) (min-colors 8))
-         :background "color-111" :foreground "color-196")
-        (t :inverse-video t))
+         :background "color-111" :foreground "color-196"))
       "Basic face for highlight buffer name in modline."
       )))
 
 (defface dir-name-face
   '(
     (((class color) (min-colors 8))
-     :foreground "#42B51F")
-    (t :inverse-video t))
-  "Basic face for highlight directory name in modline."
-  )
+     :foreground "#859900" :inverse-video nil))
+  "Basic face for highlight directory name in modline.")
 
 (defun shorten-directory (dir max-length)
   "Show up to `max-length' characters of a directory name `dir'."
@@ -40,34 +36,36 @@
 
 (setq prog-mode-line-format
       (list
-       ;; the buffer name; the file name as a tool tip
-       '(:eval (propertize "%b " 'face 'buffer-file-name-face
-                           'help-echo (buffer-file-name)))
-       '(:eval (propertize (shorten-directory default-directory 80)
+       "["
+       '(:eval (propertize (shorten-directory default-directory 40)
                            'face 'dir-name-face))
+       ;; the buffer name; the file name as a tool tip
+       '(:eval (propertize "%b" 'face 'buffer-file-name-face
+                           'help-echo (buffer-file-name)))
+       "]"
 
-       ;; line and column
-       " (" ;; '%02' to set to 2 chars at least; prevents flickering
-       (propertize "%l" 'face 'font-lock-type-face) ","
-       (propertize "%c" 'face 'font-lock-type-face) 
-       ") "
+       ;; ;; line and column
+       ;; " (" ;; '%02' to set to 2 chars at least; prevents flickering
+       ;; (propertize "%l" 'face 'font-lock-type-face) ","
+       ;; (propertize "%c" 'face 'font-lock-type-face)
+       ;; ") "
 
        ;; if which-func-mode is in effect, display which
        ;; function we are currently in.
-       '(which-func-mode ("-- " which-func-format " --"))
+       '(which-func-mode (" " which-func-format))
 
        ;; relative position, size of file
        "["
        (propertize "%p" 'face 'font-lock-constant-face) ;; % above top
        "/"
        (propertize "%I" 'face 'font-lock-constant-face) ;; size
-       "] "
+       "]"
 
        ;; the current major mode for the buffer.
        "["
        '(:eval (propertize "%m" 'face 'font-lock-string-face
                            'help-echo buffer-file-coding-system))
-       "] "
+       "]"
 
        "[" ;; insert vs overwrite mode, input-method in a tooltip
        '(:eval (propertize (if overwrite-mode "Ovr" "Ins")
@@ -85,7 +83,7 @@
        '(:eval (when buffer-read-only
                  (concat ","  (propertize "RO"
                                           'face 'font-lock-type-face
-                                          'help-echo "Buffer is read-only"))))  
+                                          'help-echo "Buffer is read-only"))))
        "] "
 
        ;; alert if file coding system is dos or mac
@@ -98,10 +96,10 @@
        ;;                     'help-echo
        ;;                     (concat (format-time-string "%c; ")
        ;;                             (emacs-uptime "Uptime:%hh"))))
-       " --"
+
        ;; i don't want to see minor-modes; but if you want, uncomment this:
        ;; minor-mode-alist  ;; list of minor modes
-       "%-" ;; fill with '-'
+       "% " ;; fill with '-'
        ))
 
 ;; let solarized color theme set modeline colors
