@@ -16,13 +16,14 @@
         ace-jump-char-mode
         ace-jump-word-mode))
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
-;; (ensure-package-installed 'ace-jump-buffer)
-;; (global-set-key (kbd "C-x b") 'ace-jump-buffer)
+
+;; =================================================================================================
+;; ibuffer
+;; =================================================================================================
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; launch imenu or idomenu if available
-(global-set-key (kbd "C-c i") (cond ((package-installed-p 'helm) 'helm-imenu)
-                                    ((package-installed-p 'idomenu) 'idomenu)
-                                    (t imenu)))
+(global-set-key (kbd "C-c i") 'idomenu)
 
 ;; ==========================================================================================
 ;; better window navigation
@@ -114,5 +115,8 @@
 (define-key global-map (kbd "C-c b") 'backup-current-file)
 
 (global-set-key (kbd "<f8>") (lambda () (interactive) (ansi-term "/bin/bash")))
+
+;; cycle through mark ring using C-u C-<space> and repeat process by typing C-<space>
+(setq set-mark-command-repeat-pop t)
 
 (provide 'odabai-keybindings)
