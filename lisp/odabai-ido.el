@@ -64,7 +64,7 @@
 
 ;; Fuzzy matching without having to type the characters in order
 ;; -------------------------------------------------------------------------------------------------
-(ensure-package-installed 'ido-better-flex)
-(ido-better-flex/enable)
+;; (ensure-package-installed 'ido-better-flex)
+;; (ido-better-flex/enable)
 
 (provide 'odabai-ido)
