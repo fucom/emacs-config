@@ -6,19 +6,24 @@
 ;;       -> Problem with remembering eshell password
 ;;          http://emacs.stackexchange.com/questions/5608/how-to-let-eshell-remember-sudo-password-for-two-minutes
 ;;       -> use multiple cursors
-;;       -> go back to previous eshel with F12.
+;;       -> go back to previous eshell with F12.
 ;;       -> adapt region color in solarized theme if smart-parens highlights sexp.
+;;          C-u C-x = (what-cursor-position)
+;;          to find out if overlay is active: (equal (get-char-property (point) 'face) 'show-paren-match)
+;;          How to remove inverse-video when smartparens is active.
 ;;       -> how to make persp-mode use helm (not really of importance)
 ;;       -> Add to current persp every newly opened buffer (e.g. compilation, grep,...)
 ;;       -> Backup directory
 ;;       -> Helm sucks: Why is the buffer list not sorted in last opened buffer
-;;       -> better commeting using dwim. Advice it
+;;       -> better commenting using dwim. Advice it
 ;;       -> copy whole sexp with C-M-<space> and normal behaviour with prefix argument.
 ;;       -> killing whole line, to beginning of line,...
 ;;       -> improve compile command to dwim (http://www.emacswiki.org/emacs/CompileCommand)
 ;;       -> write the module as helm-mt for eshell
-;;       -> solarized-theme use lookup table for 256 (https://github.com/sellout/emacs-color-theme-solarized/blob/master/solarized-definitions.el)
 ;;       -> learn ibuffer ;)
+;;       -> Write ack package (preferably incremental seaerch)
+;;       -> Solarized theme region highlighting correct colors in presence of smart-parens layer. See note in theme.
+;;       -> Reftex in org files (title+year+conference). Import files.
 
 ;; Where I keep all my lisp and configurations for emacs
 (setq dotfiles-dir (expand-file-name "/home/odabai/.emacs.d/"))
@@ -46,7 +51,7 @@
 	odabai-backup
 	odabai-dired
 	odabai-ediff
-	odabai-ido
+	;; odabai-ido
 	odabai-org
 	odabai-vlf
 	;; odabai-projectile !
@@ -62,7 +67,7 @@
 	odabai-eshell
 	odabai-slime
         ;; very time consuming
-	;; odabai-helm
+	odabai-helm
 	odabai-cpp
 	;; odabai-autopair !
 	odabai-auctex
@@ -116,3 +121,4 @@
 ;; mode: lisp
 ;; End:
 
+(put 'upcase-region 'disabled nil)

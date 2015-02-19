@@ -159,6 +159,11 @@
 ;; highlight FIXME, TODO...
 ;; ----------------------------
 (add-hook 'prog-mode-hook (lambda () (turn-on-fic-mode)))
+;; set face in case the theme does not
+(set-face-attribute 'font-lock-fic-face nil
+                    :foreground "#FF6E64"
+                    :weight 'bold
+                    :box '(:line-width 1 :style none))
 
 ;; change cursor when highlighting a region
 ;; ----------------------------------------

@@ -1,7 +1,8 @@
 ;; Mixture of the following two themes:
 ;; - https://github.com/purcell/color-theme-sanityinc-solarized/blob/master/color-theme-sanityinc-solarized.el
 ;; - https://github.com/sellout/emacs-color-theme-solarized
-;;; TODO - backward compatible to previous Emacs versions. Should be achieved with minor-mode:
+;;; TODO - backward compatible to previous Emacs versions
+;;;      - Color customization for highlighted regions by smart-parens. Should be achieved with minor-mode:
 ;;;        http://stackoverflow.com/questions/23985602/emacs-creating-a-custom-highlight-parentheses-function
 
 ;;; Code
@@ -151,16 +152,9 @@ use the 256 degraded color mode."
       (mode-line           (:foreground ,base1 :background ,base02 :box (:line-width 1 :color ,base1 :style nil )))
       (mode-line-buffer-id (:foreground ,base1                                                                  ))
       (mode-line-inactive  (:foreground ,base0  :background ,base02 :box (:line-width 1 :color ,base02          )))
-
-      ;; (region ((t (:background ,base02 :foreground ,base0 :inverse-video nil))
-
-      ;; asasa C-u C-x = (what-cursor-position)
-      ;; to find out if overlay is active: (equal (get-char-property (point) 'face) 'show-paren-match)
-      ;; FIXME: How to remove inverse-video when smartparens is active.
-      (region (:background
-               ,(if nil
-                    base02
-                  base02) :foreground ,base0 :inverse-video nil))
+      (region              (:background ,base02 :foreground ,base0 :inverse-video nil                           ))
+      (match               (:foreground ,yellow                                                                 ))
+      (hl-line             (:background ,base02                                                                 ))
 
       (secondary-selection (:background ,base02))
       (trailing-whitespace (:foreground "yellow" :inverse-video t))
@@ -326,17 +320,16 @@ use the 256 degraded color mode."
       (helm-grep-lineno (:foreground ,orange))
       (helm-grep-match (:inherit match))
       (helm-grep-running (:foreground ,red))
-      (helm-header (:inherit header-line))
+      (helm-header (:inherit default))
       (helm-lisp-completion-info (:foreground ,base0))
       (helm-lisp-show-completion (:foreground ,yellow :background ,base02 :bold t))
       (helm-M-x-key (:foreground ,orange :underline t))
       (helm-moccur-buffer (:foreground ,cyan :underline t))
-      ;; (helm-match (:inherit match))
+      (helm-match (:inherit match))
       (helm-selection (:background ,base02 :underline t))
-      (helm-selection-line (:background ,base02 :foreground ,base1
-                                        :underline nil))
+      (helm-selection-line (:background ,base02 :foreground ,base1 :underline nil))
       (helm-separator (:foreground ,red))
-      (helm-source-header (:background ,blue :foreground ,base03 :underline nil))
+      (helm-source-header (:background ,base03 :foreground ,yellow :underline t))
       (helm-time-zone-current (:foreground ,green))
       (helm-time-zone-home (:foreground ,red))
       (helm-visible-mark (:background ,base03 :foreground ,magenta :bold t))

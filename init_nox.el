@@ -27,16 +27,6 @@
 (require 'tty-format)
 (add-hook 'find-file-hooks 'tty-format-guess)
 
-(require 'ido)
-(ido-mode 1)
-(ido-everywhere 1)
-(setq ido-enable-flex-matching t)
-(setq ido-create-new-buffer 'always)
-(setq ido-enable-tramp-completion nil)
-(setq ido-enable-last-directory-history nil)
-(setq ido-confirm-unique-completion nil) ;; wait for RET, even for unique?
-(setq ido-show-dot-for-dired t) ;; put . as the first item
-
 ;; mark down mode (.md)
 (ensure-package-installed 'markdown-mode)
 (autoload 'markdown-mode "markdown-mode"
@@ -45,6 +35,11 @@
 (add-to-list 'auto-mode-alist '("\\.markdown\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.mkd\\'" . markdown-mode))
+
+;; use ido
+(require 'odabai-ido)
+;; enable viewing .m files
+(require 'odabai-matlab)
 
 ;; (require 'moe-theme)
 ;; (require 'zenburn-theme)

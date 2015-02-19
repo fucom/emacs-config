@@ -6,7 +6,7 @@
 (ensure-package-installed 'latex-preview-pane)
 
 ;; Auto-capitalize: Capitalizes the beginning of a sentence.
-;; ATTENTION (emacs 24.3.1):
+;; WARNING (emacs 24.3.1):
 ;;   change the line in file .emacs.d/elpa/auto-capi./auto-capitalize.elc
 ;;   (defalias 'auto-capitalize #[(beg end length) to
 ;;   (defalias 'auto-capitalize #[(&optional beg end length)
@@ -73,7 +73,7 @@
 	 (reftex-set-cite-format
 	  '((?p . "[[papers:%l][%l-paper]]")
 	    (?t . "%t")
-	    (?f . "%t :%y:\n:PROPERTIES:\n:Custom_ID: %l\n:END:\n[[papers:%l][%l-paper]]")))))
+	    (?f . "%t\n:PROPERTIES:\n:Custom_ID: %l\n:Year: %y\n:Booktitle: %j\n:END:\n[[papers:%l][%l-paper]]")))))
   (define-key org-mode-map (kbd "C-c )") 'reftex-citation)
   (define-key org-mode-map (kbd "C-c (") 'org-mode-reftex-search))
 (add-hook 'org-mode-hook 'org-mode-reftex-setup)
@@ -88,7 +88,11 @@
 (setq org-link-abbrev-alist
       '(("bib"    . "~/Dropbox/thesis/egbib.bib::%s")
 	("notes"  . "~/Dropbox/org/thesis.org::#%s")
-	("papers" . "~/work/papers/%s.pdf")))
+	("papers" . "~/work/programs/thesis/papers/%s.pdf")))
 ;;]
+
+;; Useful functions
+;; reftex-format-cite-function
+;; reftex-get-bib-field
 
 (provide 'odabai-auctex)

@@ -72,9 +72,7 @@
 (define-key sp-keymap (kbd "M-<C-backspace>") 'sp-backward-kill-sexp)
 (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
 (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
-;; I use <M-backspace> to delete words
-(define-key sp-keymap (kbd "<M-backspace>") nil)
-(define-key sp-keymap (kbd "<C-backspace>") 'sp-backward-unwrap-sexp)
+(define-key sp-keymap (kbd "<M-backspace>") 'sp-backward-unwrap-sexp)
 
 ;; nice search: highlight-symbol
 
