@@ -76,6 +76,7 @@
         odabai-stumpwm
 	odabai-theme
         odabai-mu4e
+        odabai-ibuffer
         ))
 
 ;; Now load other things
