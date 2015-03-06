@@ -37,14 +37,14 @@
 (defun create-tags (dir-name)
   "Create tags file."
   (interactive "DDirectory: ")
-  (eshell-command 
+  (eshell-command
    (format "find %s -type f | egrep \"\.(cpp|h|hpp)$\" | xargs etags -a" dir-name)))
 
 (defun er-refresh-etags (&optional extension)
   "Run etags on all peer files in current dir and reload them silently."
   (interactive)
   (shell-command (format "etags *.%s" (or extension "el")))
-  (let ((tags-revert-without-query t))  ; don't query, revert silently          
+  (let ((tags-revert-without-query t))  ; don't query, revert silently
     (visit-tags-table default-directory nil)))
 
 ; Add cmake listfile names to the mode list.
@@ -58,7 +58,7 @@
 ;; =======================================================================================================
 ;; Remove completion buffer when done
 ;; =======================================================================================================
-(add-hook 'minibuffer-exit-hook 
+(add-hook 'minibuffer-exit-hook
       '(lambda ()
          (let ((buffer "*Completions*"))
            (and (get-buffer buffer)
@@ -89,19 +89,20 @@
 (defun no-split-window ()
   (interactive)
   nil)
-(setq split-window-preferred-function 'no-split-window)
+(add-hook 'c-mode-common-hook (lambda () (setq split-window-preferred-function 'no-split-window)))
+
 ;; ---------------------------------------------------------------------------------------------
 ;; Show error messages if any or close window if none
 ;; ---------------------------------------------------------------------------------------------
-(defun kill-compile-buffer-if-successful (buffer string) 
-  " kill a compilation buffer if succeeded without warnings " 
-  (if (and 
-       (string-match "compilation" (buffer-name buffer)) 
-       (string-match "finished" string) 
-       (not 
-        (with-current-buffer buffer 
-          (search-forward "error" nil t)))) 
-      (run-with-timer 1 nil 
+(defun kill-compile-buffer-if-successful (buffer string)
+  " kill a compilation buffer if succeeded without warnings "
+  (if (and
+       (string-match "compilation" (buffer-name buffer))
+       (string-match "finished" string)
+       (not
+        (with-current-buffer buffer
+          (search-forward "error" nil t))))
+      (run-with-timer 1 nil
                       (switch-to-buffer (other-buffer (current-buffer) 1)))))
 (add-hook 'compilation-finish-functions 'kill-compile-buffer-if-successful)
 ;; Follow compilation output to first error
