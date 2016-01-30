@@ -8,6 +8,8 @@
 ;; you can get the name of fonts by running the following in the minibuffer:
 ;; set-default-font
 ;; (set-default-font "-unknown-Inconsolata-normal-normal-normal-*-16-*-*-*-m-0-iso10646-1")
+;; Inconsolata theme: https://github.com/samposm/Inconsolata-LGC
+;; (set-default-font "-unknown-Inconsolata LGC-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 (set-default-font "-unknown-DejaVu Sans Mono-normal-normal-normal-*-14-*-*-*-m-0-iso10646-1")
 
 ;; no tabs
@@ -45,6 +47,10 @@
 (add-to-list 'auto-mode-alist '("\\.txt\\'" . text-mode))
 (add-to-list 'auto-mode-alist '("^README$" . text-mode))
 
+;;; ----------------------------------------
+;;; Line number
+;;; ----------------------------------------
+;;;[
 (require 'linum)
 ;; (global-linum-mode 1)
 (setq linum-format "%d ")
@@ -55,6 +61,7 @@
 (add-hook 'prog-mode-hook (lambda () (linum-mode 1)))
 (add-hook 'text-mode-hook (lambda () (linum-mode 1)))
 (add-hook 'org-mode-hook (lambda () (linum-mode -1)))
+;;;]
 
 ;; =================================================================================================
 ;; Color themes
@@ -159,6 +166,8 @@
 ;; highlight FIXME, TODO...
 ;; ----------------------------
 (add-hook 'prog-mode-hook (lambda () (turn-on-fic-mode)))
+(add-hook 'TeX-mode-hook (lambda () (turn-on-fic-mode)))
+
 ;; set face in case the theme does not
 (set-face-attribute 'font-lock-fic-face nil
                     :foreground "#FF6E64"
@@ -175,5 +184,10 @@
 ;; It is espeacially useful for maximizing current buffer
 (when (fboundp 'winner-mode)
   (winner-mode 1))
+
+;; Show the matching parentheses if both are visible, and the expression otherwise
+(require 'paren)
+(setq show-paren-style 'parenthesis)
+(show-paren-mode +1)
 
 (provide 'odabai-theme)

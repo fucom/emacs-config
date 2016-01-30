@@ -22,4 +22,6 @@
 (setq fic-highlighted-words '("FIXME" "TODO" "BUG" "KLUDGE" "WARNING"))
 (require 'fic-mode)              ; it is important to require this package due to odabai-solarized-*
 
+(ensure-package-installed 'comment-dwim-2)
+
 (provide 'odabai-prog)

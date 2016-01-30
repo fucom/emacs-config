@@ -49,8 +49,8 @@
   ;; Use only one desktop
   ;; =================================================================================================
 
-  (setq desktop-path '("/home/odabai/.emacs.d/")
-        desktop-dirname "/home/odabai/.emacs.d/"
+  (setq desktop-path '("/home/homeless/.emacs.d/")
+        desktop-dirname "/home/homeless/.emacs.d/"
         desktop-base-file-name "desktop-emacs"
         desktop-base-lock-name  "desktop-emacs.lock"
         history-length 250

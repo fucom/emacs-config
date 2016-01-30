@@ -12,38 +12,52 @@
 ;;   (defalias 'auto-capitalize #[(&optional beg end length)
 ;;   Do the same in the auto-capitalize.el file.
 ;; The parameter has to be optional for desktop.el to save/load correctly the current desktop.
-(ensure-package-installed 'auto-capitalize)
+;;(ensure-package-installed 'auto-capitalize)
 
 (if (locate-library "reftex")
-    (progn (require 'auto-capitalize)
+    (progn ;;(require 'auto-capitalize)
            (custom-set-variables
             '(inhibit-startup-screen t)
             '(TeX-PDF-mode t))
-           (add-hook 'LaTeX-mode-hook 'auto-capitalize-mode)
+           ;;(add-hook 'LaTeX-mode-hook 'auto-capitalize-mode)
            (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
            (add-hook 'LaTeX-mode-hook 'flyspell-mode)
            (add-hook 'LaTeX-mode-hook (lambda() (set-variable 'truncate-lines nil)))
 
            (setq sentence-end-double-space nil)
+           (setq TeX-save-query nil) ;;autosave before compiling
+
+	   (add-hook 'LaTeX-mode-hook (lambda ()
+					(define-key LaTeX-mode-map (kbd "C-c C-k") nil) ; undefine some key shortcut for copying lines
+                                        (define-key LaTeX-mode-map (kbd "<f12>") '(lambda ()
+                                                                                    (interactive)
+                                                                                    (TeX-save-document (TeX-master-file))
+                                                                                    (TeX-command "LaTeX" 'TeX-master-file -1)))
+                                        (define-key LaTeX-mode-map (kbd "C-<f12>") '(lambda ()
+                                                                                      (interactive)
+                                                                                      (TeX-command "BibTeX" 'TeX-master-file -1)))
+                                        (define-key LaTeX-mode-map (kbd "S-<f12>") '(lambda ()
+                                                                                      (interactive)
+                                                                                      (TeX-command "View" 'TeX-master-file -1)))))
+
 
            ;; --------------------------------------------------------------------------------------
            ;; Reverse and forward search between PDF and TEX
            ;; --------------------------------------------------------------------------------------
            (add-hook 'LaTeX-mode-hook 'server-start)
-           ;; (setq TeX-source-correlate-method 'synctex)
-           ;; (custom-set-variables '(LaTeX-command "latex -synctex=1"))
            (add-hook 'LaTeX-mode-hook 'TeX-source-correlate-mode)
-           (setq TeX-view-program-selection
-                 '((output-pdf "PDF Viewer")))
+           (setq TeX-view-program-selection '((output-pdf "PDF Viewer")))
            ;; IMPORTANT: to give auto-focus to Okular, I added:
            ;; - && wmctrl -a %o - Okular
            ;; - and you have to disable in Settings/Configure Okular/General/Display document title in title bar
            (setq TeX-view-program-list
-                 '(("PDF Viewer" "okular --unique %o#src:%n%b && wmctrl -a %o - Okular #")))
+                 ;; '(("PDF Viewer" "okular --unique %o#src:%n%b && wmctrl -a %o - Okular #")))
+                 ;;'(("PDF Viewer" "evince  %o#src:%n%b && wmctrl -a %o - evince #")))
+                 '(("PDF Viewer" "evince  %o#src:%n%b && wmctrl -a %o - evince #")))
            ))
 
 ;; ===============================================================================================
-;; Setup org-mode and reftex as research paper management tool
+;; setup org-mode and reftex as research paper management tool
 ;; https://tincman.wordpress.com/2011/01/04/research-paper-management-with-emacs-org-mode-and-reftex/
 ;; Workflow:
 ;; A) Adding a paper: Insert paper with title and link to paper file

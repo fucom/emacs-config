@@ -61,6 +61,12 @@
 
   ;; (setq helm-idle-delay 0.1)
   ;; (setq helm-input-idle-delay 0.1)
-)
+  )
+
+;; skip the first two dot folders
+(advice-add 'helm-ff-filter-candidate-one-by-one
+            :around (lambda (fcn file)
+                      (unless (string-match "\\(?:/\\|\\`\\)\\.\\{1,2\\}\\'" file)
+                        (funcall fcn file))))
 
 (provide 'odabai-helm)

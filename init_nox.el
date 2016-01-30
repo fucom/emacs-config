@@ -1,5 +1,5 @@
 ;; Where I keep all my lisp and configurations for emacs
-(setq dotfiles-dir (expand-file-name "/home/odabai/.emacs.d/"))
+(setq dotfiles-dir (expand-file-name "/home/homeless/.emacs.d/"))
 
 (add-to-list 'load-path (concat dotfiles-dir "lisp"))
 

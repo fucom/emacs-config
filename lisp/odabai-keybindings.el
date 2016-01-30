@@ -1,4 +1,5 @@
 ;; TODO: make a keymap for C-k so that we can kill a line/end/start of file... in a easy way
+;;       -> ;; https://github.com/kai2nenobu/guide-key
 
 (global-set-key (kbd "C-z") 'goto-line)
 
@@ -55,8 +56,8 @@
 ;; you can also use (C-c q) to break lines in comments
 ;; (add-hook 'prog-mode-hook 'turn-on-auto-fill)
 
-(global-set-key (kbd "<f12>") 'create-or-kill-eshell)
-(global-set-key (kbd "C-<f12>") 'erase-eshell-buffer)
+;; (global-set-key (kbd "<f12>") 'create-or-kill-eshell)
+;; (global-set-key (kbd "C-<f12>") 'erase-eshell-buffer)
 
 ;; killing region without kill ring
 (global-set-key (kbd "C-M-q") 'delete-region)
@@ -72,7 +73,8 @@
 (define-key sp-keymap (kbd "M-<C-backspace>") 'sp-backward-kill-sexp)
 (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
 (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
-(define-key sp-keymap (kbd "<M-backspace>") 'sp-backward-unwrap-sexp)
+;; use C-- M-<delete> for sp-backward-unwrap-sexp
+(define-key sp-keymap (kbd "<M-backspace>") nil)
 
 ;; nice search: highlight-symbol
 
@@ -82,7 +84,7 @@
 ;; =================================================================================================
 (ensure-package-installed 'visual-regexp-steroids)
 (require 'visual-regexp-steroids)
-(global-set-key (kbd "C-c r") 'vr/my-search-replace-simultaneously) ; uses vr/replace!
+(global-set-key (kbd "C-c r") 'vr/replace)
 (define-key global-map (kbd "C-c q") 'vr/query-replace)
 ;; if you use multiple-cursors, this is for you:
 (define-key global-map (kbd "C-c m") 'vr/mc-mark)
@@ -103,9 +105,6 @@
   (define-key ctl-x-map "r\C-w" 'rm-kill-region)
   (define-key ctl-x-map "r\M-w" 'rm-kill-ring-save))
 
-;; Help functions
-(define-key global-map (kbd "C-h s") 'apropos)
-
 (global-set-key (kbd "<f9> t") 'cycle-color-theme)
 
 (define-key global-map (kbd "<f9> m") 'mu4e)
@@ -116,5 +115,58 @@
 
 ;; cycle through mark ring using C-u C-<space> and repeat process by typing C-<space>
 (setq set-mark-command-repeat-pop t)
+
+(global-set-key (kbd "C-h s") 'apropos)
+
+(global-set-key (kbd "C-x g") 'magit-status)
+
+;; Use C-S-o to open a new line below and move point there.
+;; With prefix argument, creates the line above.
+(global-set-key (kbd "C-S-o") 'odabai/goto-created-newline)
+
+;; Easier way of commenting than comment-dwim especially for one line
+(global-set-key (kbd "M-;") 'comment-dwim-2)
+
+;; ====================================================================================================
+;; multiple cursors
+;; ====================================================================================================
+;; (defun odabai-mc-dwim (&optional args)
+;;   (interactive "P")
+;;   (if args
+;;       (mc/edit-lines)
+;;     (if (use-region-p)
+;;         (mc/mark-more-like-this-extended)
+;;       (mc/mark-all-like-this))))
+;; (copy-region-as-kill beg end)
+;; (with-temp-buffer
+;;   (yank)
+;; (goto-char 0)
+;; save-match-data
+;; http://emacswiki.org/emacs/ThingAtPoint
+;; count-lines start end => To know if region is over multiple lines
+;; Nice way of knowing which option:
+;; (style (cond
+;;         ;; called from lisp
+;;         ((and arg (symbolp arg))
+;;          arg)
+;;         ;; negative argument
+;;         ((< (prefix-numeric-value arg) 0)
+;;          'ignore)
+;;         (arg 'pad)
+;;         (t mc/edit-lines-empty-lines))))
+
+;; (defun odabai-mc-dwim (&optional args)
+;;   (interactive "P")
+;;   ;; find out if user selected sexp or region over multiple lines
+;;   (style (cond
+;;           ((and arg (symbolp arg)) '
+;;            )
+;;   (int-to-string (count-lines (region-beginning) (region-end)))
+;;   )
+
+;; (ensure-package-installed 'multiple-cursors)
+;; (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+;; (global-set-key (kbd "C-c C-,") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-.") 'mc/mark-more-like-this-extended)
 
 (provide 'odabai-keybindings)

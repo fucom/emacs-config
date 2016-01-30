@@ -1,4 +1,3 @@
-;; =============================================================================================
 ;; org-mode
 ;; =============================================================================================
 (ensure-package-installed 'org)
@@ -123,7 +122,7 @@ This function does nothing if not in org-mode, so you can safely add it to `befo
 An example usage goes like this:
      ...
 #+HEADER: :convertfrompdf t
-\[\[/home/odabai/Dropbox/thesis/optimization/figs/results_runtime_map/org-conv-imgs/base_voc07.png\]\]
+\[\[/home/homeless/Dropbox/thesis/optimization/figs/results_runtime_map/org-conv-imgs/base_voc07.png\]\]
      ...
 The command will create the folder \"org-conv-imgs\" for you and place the image \"base_voc07.png\"
 in it."

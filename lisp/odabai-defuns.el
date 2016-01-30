@@ -358,15 +358,6 @@
       (iedit-mode)
     (call-interactively 'replace-string)))
 
-(defun vr/my-search-replace-simultaneously (&optional arg)
-  "Search for a string if no prefix argument is provided. If a
-  prefix argument is used, search for word at point and replace
-  it simultaneously in the whole buffer."
-  (interactive "P")
-  (if (consp arg)
-      (iedit-mode)
-    (call-interactively 'vr/replace)))
-
 ;; if you need to open a root file for modification
 (defun find-alternate-file-with-sudo ()
   (interactive)
@@ -511,5 +502,19 @@ beginning."
     (compilation-start (concat command-args " < " null-device)
                        'grep-mode)))
 ;;]
+
+;; Open line above/below and place me there
+;; Can be improved using numeric prefix C-u 9 odabai/goto... to create 9 lines.
+(defun odabai/goto-created-newline (&optional arg)
+  "Create a new line above and place point to that position.
+Using a prefix argument create the newline below."
+  (interactive "P")
+  (cond (arg
+         (move-end-of-line 1)
+         (newline-and-indent))
+        (t
+         (move-beginning-of-line 1)
+         (split-line)
+         (indent-for-tab-command)) ))
 
 (provide 'odabai-defuns)

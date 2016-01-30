@@ -4,8 +4,8 @@
 (setq make-backup-files nil)  ; I will my own type of backups
 (setq auto-save-default t)    ; I prefer to have auto-save in case my program/laptop crashes
 
-(defvar backup-directory "/home/odabai/.emacs.d/backups/") ;; do not give relative paths
-(defvar auto-save-directory (concat "/home/odabai/.emacs.d/autosaves" "/"))
+(defvar backup-directory "/home/homeless/.emacs.d/backups/") ;; do not give relative paths
+(defvar auto-save-directory (concat "/home/homeless/.emacs.d/autosaves" "/"))
 (defvar max-backup-dir-size 100) ;; size when erasing the files in backup-directory
 
 (if (not (file-exists-p backup-directory))

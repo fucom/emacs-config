@@ -3,11 +3,12 @@
 (when (and ask-to-manage-sessions (display-graphic-p))
   ;; =================================================================================================
   ;; Multiple workspaces
-  ;; Issues : - Cycling through perspectives (workspaces) is really possible as all perspectives are
-  ;;            saved in hash tables.
+  ;; Issues : - Cycling through perspectives (workspaces) is not really possible as all perspectives
+  ;;            are saved in hash tables.
   ;;          - Currently, I only manage one session which makes loading/saving faster as no user
   ;;            needs to be asked. This can be changed by not passing default filenames to
   ;;            perspective's save and load functions.
+  ;; BUG persp-mode is not working with cedet. So I switch it off/on where needed.
   ;; =================================================================================================
   (ensure-package-installed 'persp-mode)
 
@@ -19,8 +20,6 @@
   (unless (file-exists-p persp-save-dir)
     (make-directory persp-save-dir))
 
-  (persp-mode 1)
-
   ;; check whether we have a previously saved session
   (defun odabai/persp-saved-session ()
     (file-exists-p (concat persp-save-dir persp-auto-save-fname)))
@@ -29,6 +28,7 @@
   (defun odabai/persp-session-restore ()
     "Restore a saved emacs session."
     (interactive)
+    (persp-mode 1)
     (if (odabai/persp-saved-session)
         (persp-load-state-from-file)
       (message "No session found.")))
@@ -36,6 +36,7 @@
   (defun odabai/persp-session-save ()
     "Save an emacs session."
     (interactive)
+    (persp-mode 1)
     (if (odabai/persp-saved-session)
         (if (y-or-n-p "Overwrite existing session? ")
             (persp-save-state-to-file)
@@ -45,6 +46,7 @@
   (defun odabai/persp-session-save-careless ()
     "Save an emacs session without caring about overwriting existing session."
     (interactive)
+    (persp-mode 1)
     (persp-save-state-to-file))
 
   ;; function that asks the user whether he wants to restore session. It is used at start-up
@@ -59,6 +61,7 @@
   (defun odabai/persp-ask-to-save-session ()
     "Save an emacs session."
     (interactive)
+    (persp-mode 1)
     (if (y-or-n-p "Would you like to save the current session?")
         (odabai/persp-session-save-careless)))
 

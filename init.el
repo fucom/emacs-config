@@ -26,13 +26,13 @@
 ;;       -> Reftex in org files (title+year+conference). Import files.
 
 ;; Where I keep all my lisp and configurations for emacs
-(setq dotfiles-dir (expand-file-name "/home/odabai/.emacs.d/"))
+(setq dotfiles-dir (expand-file-name "~/.emacs.d/"))
 
 ;; configuration for various modes
 (add-to-list 'load-path (concat dotfiles-dir "lisp"))
 
 ;; location of emacs source code (c files)
-(setq source-directory "/home/odabai/.emacs.d/emacs-24.4/")
+(setq source-directory "~/software/emacs-24.4/")
 
 ;; make my packages as safe
 (if (boundp 'custom-enabled-themes)
@@ -51,13 +51,13 @@
 	odabai-backup
 	odabai-dired
 	odabai-ediff
-	;; odabai-ido
+	;;;;;; odabai-ido
 	odabai-org
 	odabai-vlf
-	;; odabai-projectile !
+	;;;; odabai-projectile !
 	odabai-persp
-        ;; Right now I prefer to use perspective for sessions saving
-        ;; odabai-desktop !
+        ;;;;;; Right now I prefer to use perspective for sessions saving
+        ;;;;; odabai-desktop !
 	odabai-prog
 	odabai-magit
 	odabai-matlab
@@ -66,16 +66,16 @@
         odabai-ac
 	odabai-eshell
 	odabai-slime
-        ;; very time consuming
+        ;;;;;;; very time consuming
 	odabai-helm
 	odabai-cpp
-	;; odabai-autopair !
+	;;;;;; odabai-autopair !
 	odabai-auctex
-        ;; odabai-snippets !
+        ;;;;;;; odabai-snippets !
         odabai-iedit
         odabai-stumpwm
 	odabai-theme
-        odabai-mu4e
+        ;;odabai-mu4e
         odabai-ibuffer
         ))
 

@@ -72,7 +72,10 @@
   (switch-to-buffer "*compilation*"))
 
 ;;  shortcut for compile command by first setting our compile command
-(setq compile-command "make -j1 -C /home/odabai/Desktop/tmp/")
+(add-hook 'c++-mode-hook
+          (lambda()
+            (set (make-local-variable 'compile-command)
+                 (concat "g++ --std=c++0x " (buffer-file-name)))))
 ;; do not keep warnings
 (setq compilation-skip-threshold 2)
 (add-hook 'c-mode-common-hook (lambda() (local-set-key (kbd "C-c v") 'compile)))

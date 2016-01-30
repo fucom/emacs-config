@@ -11,10 +11,12 @@
                 lisp-mode
                 emacs-lisp-mode
                 inferior-emacs-lisp-mode
-                slime-repl-mode))
+                slime-repl-mode
+                c-mode-common-hook))
   (add-to-list 'ac-modes mode))
 ;; turn ac for the modes in ac-modes on
 (global-auto-complete-mode t)
+
 ;; copied from auto-complete-config.el. This enables auto-config to know actually the emacs
 ;; function and variables.
 (add-hook 'emacs-lisp-mode-hook 'ac-emacs-lisp-mode-setup)
