@@ -105,8 +105,9 @@
        (not
         (with-current-buffer buffer
           (search-forward "error" nil t))))
-      (run-with-timer 1 nil
-                      (switch-to-buffer (other-buffer (current-buffer) 1)))))
+      (run-with-timer 1 nil (lambda ()
+                              (switch-to-buffer (other-buffer (current-buffer) 1))))))
+
 (add-hook 'compilation-finish-functions 'kill-compile-buffer-if-successful)
 ;; Follow compilation output to first error
 (setq compilation-scroll-output 'first-error)
