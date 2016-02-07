@@ -103,10 +103,9 @@
        (string-match "compilation" (buffer-name buffer))
        (string-match "finished" string)
        (not
-        (with-current-buffer buffer
-          (search-forward "error" nil t))))
-      (run-with-timer 1 nil (lambda ()
-                              (switch-to-buffer (other-buffer (current-buffer) 1))))))
+        (with-current-buffer (buffer-name buffer)
+          (and (goto-char 0) (re-search-forward ": \\(fatal \\)?error" nil t))))) ; adapt to visual c++ error messages
+      (run-with-timer 1 nil (lambda () (switch-to-buffer (other-buffer (current-buffer) 1))))))
 
 (add-hook 'compilation-finish-functions 'kill-compile-buffer-if-successful)
 ;; Follow compilation output to first error
