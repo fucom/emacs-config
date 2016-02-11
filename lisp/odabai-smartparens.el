@@ -19,17 +19,31 @@
                 (looking-at (sp--get-opening-regexp)))
         (insert " ")))))
 
-(defun my-create-newline-and-enter-sexp (&rest _ignored)
+;; void foo ()
+;; {
+;;
+;; }
+(defun odabai-create-newline-and-enter-sexp (&rest _ignored)
   "Open a new brace or bracket expression, with relevant newlines and indent. "
-  (newline)
-  (indent-according-to-mode)
-  (forward-line -1)
+  (newline-and-indent)
+  (newline-and-indent)
+  (previous-line)
+  (previous-line)
+  (search-forward "{")
+  (backward-char)
+  (newline-and-indent)
+  (next-line)
   (indent-according-to-mode))
+
+(defun odabai-add-space-after-paren-sexp (&rest _ignored)
+  (insert "  ")
+  (backward-char))
 
 ;; I basically copied this code to show the power of smartparens
 ;; (sp-local-pair 'c++-mode "{" nil :post-handlers '(:add my-open-block-c-mode))
 ;; (sp-local-pair 'emacs-lisp-mode "(" nil :post-handlers '(:add my-add-space-after-sexp-insertion))
-(sp-local-pair 'c++-mode "{" nil :post-handlers '((my-create-newline-and-enter-sexp "RET")))
+(sp-local-pair 'c++-mode "{" nil :post-handlers '(:add odabai-create-newline-and-enter-sexp))
+(sp-local-pair 'c++-mode "(" nil :post-handlers '(:add odabai-add-space-after-paren-sexp))
 
 ;; enable smartparens in minibuffer
 (setq sp-ignore-modes-list (delete 'minibuffer-inactive-mode sp-ignore-modes-list))

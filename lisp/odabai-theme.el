@@ -180,8 +180,8 @@
 (add-hook 'activate-mark-hook (lambda () (setq cursor-type 'bar)))
 
 ;; Browsing through window configurations
+;; Allows to maximize current window (C-x 1) and restore it with C-c left
 ;; Use C-c left and C-c right
-;; It is espeacially useful for maximizing current buffer
 (when (fboundp 'winner-mode)
   (winner-mode 1))
 

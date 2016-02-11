@@ -11,20 +11,20 @@
 ;;Mode C
 (add-hook 'c-mode-hook
           '(lambda ()
-             (c-set-style "ellemtel")
+             (c-set-style "stroustrup")
              (load-library "cc-cmds")
              (c-toggle-hungry-state t)
-             (setq c-indent-level 4)
-             (setq c-basic-offset 4)
+             (setq c-indent-level 2)
+             (setq c-basic-offset 2)
              ))
 ;;Mode C++
 (add-hook 'c++-mode-hook
           '(lambda ()
-             (c-set-style "ellemtel")
+             (c-set-style "stroustrup")
              (load-library "cc-cmds")
              (c-toggle-hungry-state t)
-             (setq c-indent-level 4)
-             (setq c-basic-offset 4)
+             (setq c-indent-level 2)
+             (setq c-basic-offset 2)
              ))
 
 ;; To make the _ not a word separator (i.e. make it a word constituent) for c++ mode, you would do this
